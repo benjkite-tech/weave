@@ -240,6 +240,9 @@ header.top{
 .step:last-child{border-right:none}
 .step.active{background:var(--ink);color:var(--ground)}
 .step.done{color:var(--moss)}
+.step.locked{opacity:0.45;cursor:not-allowed}
+.flash-toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--ground);font-family:"Space Mono";font-size:13px;padding:12px 20px;border-radius:var(--r-pill);opacity:0;pointer-events:none;transition:all var(--std);z-index:200;max-width:90vw;text-align:center}
+.flash-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .step .sn{opacity:0.6;margin-right:6px}
 
 /* ---------- panels ---------- */
@@ -438,9 +441,9 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
 <!-- HOME: thesis strip -->
 <section class="home-thesis">
   <div class="wrap">
-    <p class="ht-line"><b>A value written on a poster can be ignored. A value woven into your operating system can't</b> — pull the thread and the whole thing unravels. As we build more custom software, values should ship as configuration, not decoration.</p>
+    <p class="ht-line"><b>The difference:</b> a poster you can ignore. A value woven into your systems you can't — pull the thread and the whole thing unravels.</p>
     <div class="ht-flow">
-      <span class="ht-step">Extract from how you already work</span>
+      <span class="ht-step">Gather from how you already work</span>
       <span class="ht-arrow">→</span>
       <span class="ht-step">Sharpen against three tests</span>
       <span class="ht-arrow">→</span>
@@ -579,20 +582,20 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
     <p class="worked-lede">This is what Weave produces: a value that's been surfaced from how you already work, sharpened against the three tests, then threaded into the systems your org actually runs on. Not a poster — a working part.</p>
     <div class="worked-card">
       <div class="wc-stage">
-        <span class="wc-tag" style="--c:var(--ember)">01 · Extracted</span>
+        <span class="wc-tag" style="--c:var(--ember)">01 · Gathered</span>
         <p>From "we shipped a rough beta in 8 days and improved it in public" Weave surfaces a candidate value.</p>
         <div class="wc-value">Ship &amp; Learn</div>
       </div>
       <div class="wc-arrow" aria-hidden="true">→</div>
       <div class="wc-stage">
-        <span class="wc-tag" style="--c:var(--harvest)">02 · Sharpened</span>
+        <span class="wc-tag" style="--c:var(--harvest)">02 · Shaped</span>
         <p>Scored against the three tests and rewritten until it can settle an argument.</p>
         <div class="wc-rule">"When speed and polish collide, we ship the rough version to real users and improve it in the open — we never delay to perfect in private."</div>
         <div class="wc-scores"><span>Costly 5</span><span>Specific 5</span><span>Opposable 4</span></div>
       </div>
       <div class="wc-arrow" aria-hidden="true">→</div>
       <div class="wc-stage">
-        <span class="wc-tag" style="--c:var(--moss)">03 · Embedded</span>
+        <span class="wc-tag" style="--c:var(--moss)">03 · Woven in</span>
         <p>Wired into the deploy pipeline so the value enforces itself.</p>
         <div class="wc-code"><span class="c">// deploy config</span>
 <span class="k">require_approval</span>: reversible ? <span class="s">false</span> : <span class="s">true</span>
@@ -667,9 +670,9 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
   <div class="wrap">
     <div class="sec-label">The pipeline</div>
     <div class="steps" id="steps">
-      <div class="step active" data-step="0" onclick="goStep(0)"><span class="sn">01</span>Extract</div>
-      <div class="step" data-step="1" onclick="goStep(1)"><span class="sn">02</span>Draft &amp; sharpen</div>
-      <div class="step" data-step="2" onclick="goStep(2)"><span class="sn">03</span>Embed</div>
+      <div class="step active" data-step="0" onclick="goStep(0)"><span class="sn">01</span>Gather</div>
+      <div class="step" data-step="1" onclick="goStep(1)"><span class="sn">02</span>Shape</div>
+      <div class="step" data-step="2" onclick="goStep(2)"><span class="sn">03</span>Weave in</div>
     </div>
   </div>
 </section>
@@ -689,52 +692,52 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
         </svg>
       </div>
       <div class="ph-text">
-      <h2 class="sec-title">EXTRACT — START WITH BEHAVIOURS</h2>
-      <p>Every good values exercise starts the same way: <b>not "what do we believe?" but "what do people actually do here when we're at our best?"</b> Values are the convictions underneath those behaviours. Weave pulls from four wells — what you <em>make</em>, what you <em>want</em>, what you've <em>proven</em>, and what you <em>refuse</em> — and reads the values out of your answers. <span class="ai-pill">AI-assisted</span></p>
+      <h2 class="sec-title">GATHER — START WITH BEHAVIOURS</h2>
+      <p>Don't ask "what do we believe?" Ask "what do people actually do here at our best?" Answer four quick prompts and Weave finds the values underneath. <span class="ai-pill">AI-assisted</span></p>
       <div class="extract-how">
-        <span class="eh-step"><b>Product.</b> What you make &amp; who for</span>
+        <span class="eh-step"><b>Make.</b> What you build &amp; who for</span>
         <span class="eh-arrow">→</span>
-        <span class="eh-step"><b>Want.</b> The behaviour you're driving</span>
+        <span class="eh-step"><b>Want.</b> The behaviour you want more of</span>
         <span class="eh-arrow">→</span>
-        <span class="eh-step"><b>Proven.</b> A decision that shows it's real</span>
+        <span class="eh-step"><b>Proven.</b> A decision that cost you something</span>
         <span class="eh-arrow">→</span>
-        <span class="eh-step"><b>Refuse.</b> The behaviour you won't tolerate</span>
+        <span class="eh-step"><b>Refuse.</b> What you won't tolerate</span>
       </div>
       </div>
     </div>
 
     <div class="qblock">
-      <label class="fld">1 · Product — what you make &amp; who for</label>
-      <div class="hint">What does your org make, and who for? The product is a values engine: a premium maker can't value "good enough," a safety-critical one can't value "move fast." Name what your product forces you to care about.</div>
-      <textarea id="q_product" placeholder="e.g. We make high-trust financial infrastructure for developers. A single outage breaks our customers' businesses — so reliability and craft aren't nice-to-haves, they're the product."></textarea>
+      <label class="fld">1 · What you make &amp; who for</label>
+      <div class="hint">Your product forces values: a premium maker can't value "good enough"; a safety-critical one can't value "move fast." What does yours make you care about?</div>
+      <textarea id="q_product" placeholder="e.g. We make high-trust payments infrastructure for developers. One outage breaks our customers' businesses — so reliability isn't a nice-to-have, it's the product."></textarea>
     </div>
 
     <div class="qblock">
-      <label class="fld">2 · Want — the behaviour you're driving</label>
-      <div class="hint">When your org is at its best, what are people actually <em>doing</em>? Describe the behaviour you want more of — in plain action, not a noun. (Behaviours first, values second.)</div>
+      <label class="fld">2 · The behaviour you want more of</label>
+      <div class="hint">At your best, what are people actually <em>doing</em>? Describe the action, not a noun.</div>
       <textarea id="q_want" placeholder="e.g. People ship a rough version to real customers fast, then improve it in the open instead of polishing in private for weeks."></textarea>
     </div>
 
     <div class="qblock">
-      <label class="fld">3 · Proven — a decision that shows it's real</label>
-      <div class="hint">Point to one real decision in the last 6 months you're proud of — ideally one that <em>cost</em> you something. Values you've paid for are real; values you only aspire to are wallpaper.</div>
+      <label class="fld">3 · A decision that cost you something</label>
+      <div class="hint">One real call from the last 6 months you're proud of. Values you've paid for are real; values you only aspire to are wallpaper.</div>
       <textarea id="q_proven" placeholder="e.g. We walked away from our biggest-ever deal because the client wanted us to skip our security review. Lost the quarter, did it anyway."></textarea>
     </div>
 
     <div class="qblock">
-      <label class="fld">4 · Refuse — the behaviour you won't tolerate</label>
-      <div class="hint">What behaviour gets someone managed out, even if they're brilliant? A value is defined as much by what it rules out as what it rewards — this gives each one a real edge.</div>
+      <label class="fld">4 · What you won't tolerate</label>
+      <div class="hint">What gets someone managed out, even if they're brilliant? A value is defined as much by what it rules out.</div>
       <textarea id="q_refuse" placeholder="e.g. People who can't take feedback in the open. We've lost genuine stars over it and never regretted it."></textarea>
     </div>
 
     <div class="btnrow">
-      <button class="btn ember" id="extractBtn" onclick="runExtract()">Surface candidate values →</button>
-      <button class="btn ghost" onclick="loadSample()">Use a sample org</button>
+      <button class="btn ember" id="extractBtn" onclick="runExtract()">Find my values →</button>
+      <button class="btn ghost" onclick="loadSample()">Try a sample org</button>
     </div>
 
     <div class="candidates" id="candidates"></div>
     <div class="btnrow" id="toDraftRow" style="display:none">
-      <button class="btn" onclick="buildDraft()">Take selected to sharpening →</button>
+      <button class="btn" onclick="buildDraft()">Shape these →</button>
     </div>
   </div>
 </section>
@@ -753,8 +756,8 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
         </svg>
       </div>
       <div class="ph-text">
-      <h2 class="sec-title">DRAFT &amp; SHARPEN</h2>
-      <p>Each value gets scored against the three tests — costly, specific, opposable. Anything scoring low is a dead value pretending to be alive. Rewrite until it can settle an argument. <span class="ai-pill">AI-assisted</span></p>
+      <h2 class="sec-title">SHAPE — MAKE THEM SHARP</h2>
+      <p>Each value is scored against three tests. Low scores mean a dead value pretending to be alive — rewrite until it can settle a real argument. <span class="ai-pill">AI-assisted</span></p>
       </div>
     </div>
     <div class="tests inline-tests">
@@ -776,7 +779,7 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
     </div>
     <div id="draftList"></div>
     <div class="btnrow" id="toEmbedRow" style="display:none">
-      <button class="btn ember" onclick="goStep(2);buildEmbed()">These are sharp — thread them in →</button>
+      <button class="btn ember" onclick="goStep(2);buildEmbed()">Weave these in →</button>
     </div>
   </div>
 </section>
@@ -796,13 +799,14 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
         </svg>
       </div>
       <div class="ph-text">
-      <h2 class="sec-title">EMBED — WEAVE IT THROUGH EVERYTHING</h2>
+      <h2 class="sec-title">WEAVE IN — THROUGH EVERY SYSTEM</h2>
       <p>This is where most value exercises stop and where the real work starts. A poster value lives in zero systems. A real one runs through several. For each value, here's how the same thread weaves through the seven systems that actually shape behaviour — so it can't quietly die.</p>
       </div>
     </div>
     <div id="embedList"></div>
     <div class="btnrow" id="exportRow" style="display:none">
       <button class="btn" onclick="exportPack()">Export the values pack →</button>
+      <button class="btn ghost" onclick="if(confirm('Clear everything and start over?'))clearState()">Start over</button>
     </div>
   </div>
 </section>
@@ -822,8 +826,42 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
 /* ---------------- state ---------------- */
 let candidates = [];   // {name, behaviour, source, selected}
 let drafts = [];       // {name, behaviour, scores:{cost,spec,opp}, flag, flagType}
-let MODEL = "claude-sonnet-4-6";
-const AI_ON = true;    // AI is embedded via API; heuristics are the offline fallback
+const AI_ON = true;    // AI runs server-side via /api/generate; heuristics are the offline fallback
+
+/* ---------------- persistence (graceful: no-op if storage blocked) ---------------- */
+const STORE_KEY='weave_state_v1';
+function saveState(){
+  try{
+    const ctx={};
+    ['ctx_site','ctx_size','ctx_work','ctx_extra','q_product','q_want','q_proven','q_refuse']
+      .forEach(id=>{const el=document.getElementById(id); if(el)ctx[id]=el.value;});
+    localStorage.setItem(STORE_KEY,JSON.stringify({candidates,drafts,ctx}));
+  }catch(e){/* storage unavailable — session-only, fine */}
+}
+function loadState(){
+  try{
+    const raw=localStorage.getItem(STORE_KEY); if(!raw)return false;
+    const s=JSON.parse(raw);
+    candidates=s.candidates||[]; drafts=s.drafts||[];
+    if(s.ctx)Object.entries(s.ctx).forEach(([id,v])=>{const el=document.getElementById(id); if(el)el.value=v;});
+    if(candidates.length)renderCandidates();
+    if(drafts.length)renderDrafts();
+    return candidates.length||drafts.length;
+  }catch(e){return false;}
+}
+function clearState(){
+  try{localStorage.removeItem(STORE_KEY);}catch(e){}
+  candidates=[];drafts=[];
+  ['ctx_site','ctx_size','ctx_work','ctx_extra','q_product','q_want','q_proven','q_refuse']
+    .forEach(id=>{const el=document.getElementById(id); if(el)el.value='';});
+  document.getElementById('candidates').innerHTML='';
+  document.getElementById('toDraftRow').style.display='none';
+  document.getElementById('draftList').innerHTML='';
+  document.getElementById('toEmbedRow').style.display='none';
+  document.getElementById('embedList').innerHTML='';
+  document.getElementById('exportRow').style.display='none';
+  goStep(0);
+}
 
 /* ---------------- view switching (real pages) ---------------- */
 function showView(name){
@@ -853,25 +891,42 @@ function contextBlock(){
 
 /* ---------------- step nav ---------------- */
 function goStep(n){
+  // guard: can't shape with no candidates, can't weave with no drafts
+  if(n>=1 && candidates.filter(c=>c.selected).length===0 && drafts.length===0){
+    flash('Gather some values first — answer a prompt or try the sample org.');
+    n=0;
+  } else if(n>=2 && drafts.length===0){
+    flash('Shape your values first.');
+    n=1;
+  }
   document.querySelectorAll('.panel').forEach((p,i)=>p.classList.toggle('show',i===n));
   document.querySelectorAll('.step').forEach((s,i)=>{
     s.classList.toggle('active',i===n);
     s.classList.toggle('done',i<n);
+    s.classList.toggle('locked', (i===1 && candidates.filter(c=>c.selected).length===0 && drafts.length===0) || (i===2 && drafts.length===0));
   });
   window.scrollTo({top:document.querySelector('.pipe').offsetTop-20,behavior:'smooth'});
+}
+/* lightweight toast */
+let flashTimer;
+function flash(msg){
+  let t=document.getElementById('flashToast');
+  if(!t){t=document.createElement('div');t.id='flashToast';t.className='flash-toast';document.body.appendChild(t);}
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(flashTimer);flashTimer=setTimeout(()=>t.classList.remove('show'),3200);
 }
 
 /* ---------------- AI helper ---------------- */
 async function askAI(system,user){
-  const res=await fetch("https://api.anthropic.com/v1/messages",{
+  const res=await fetch("/api/generate",{
     method:"POST",
-    headers:{"Content-Type":"application/json","anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},
-    body:JSON.stringify({model:MODEL,max_tokens:1500,system:system,messages:[{role:"user",content:user}]})
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({system:system,prompt:user})
   });
   if(!res.ok){throw new Error("API "+res.status);}
   const data=await res.json();
-  const text=data.content.filter(b=>b.type==="text").map(b=>b.text).join("\n");
-  return text.replace(/```json|```/g,"").trim();
+  if(data.error){throw new Error(data.error);}
+  return (data.text||"").replace(/```json|```/g,"").trim();
 }
 
 /* ---------------- EXTRACT ---------------- */
@@ -898,12 +953,14 @@ async function runExtract(){
       candidates=JSON.parse(out).map(c=>({...c,selected:true}));
     }catch(e){
       candidates=heuristicExtract(a);
+      flash('Using built-in suggestions — connect AI for sharper, custom values.');
     }
   }else{
     candidates=heuristicExtract(a);
   }
   renderCandidates();
-  btn.disabled=false;btn.textContent='Re-surface candidates →';
+  saveState();
+  btn.disabled=false;btn.textContent='Find my values again →';
 }
 
 function heuristicExtract(a){
@@ -964,7 +1021,7 @@ async function buildDraft(){
 
 function renderDrafts(){
   const el=document.getElementById('draftList');
-  if(drafts.length===0){el.innerHTML='<div class="empty"><div class="display">NOTHING TO SHARPEN YET</div>Go back to Extract and select some candidates.</div>';return;}
+  if(drafts.length===0){el.innerHTML='<div class="empty"><div class="display">NOTHING TO SHAPE YET</div>Go back to Gather and pick some candidates.</div>';return;}
   el.innerHTML=drafts.map((d,i)=>{
     const s=d.scores;const avg=(s.cost+s.spec+s.opp)/3;
     let flag=d.flag,ft=d.flagType;
@@ -993,6 +1050,7 @@ function renderDrafts(){
     </div>`;
   }).join('');
   document.getElementById('toEmbedRow').style.display='flex';
+  saveState();
 }
 
 async function aiRewrite(i){
@@ -1101,7 +1159,7 @@ function embedFor(name,behaviour){
 function buildEmbed(){
   const el=document.getElementById('embedList');
   const finals=drafts;
-  if(finals.length===0){el.innerHTML='<div class="empty"><div class="display">NOTHING TO WEAVE IN</div>Sharpen some values first.</div>';return;}
+  if(finals.length===0){el.innerHTML='<div class="empty"><div class="display">NOTHING TO WEAVE IN</div>Shape some values first.</div>';return;}
   el.innerHTML=finals.map((d,i)=>{
     const e=embedFor(d.name,d.behaviour);
     const col=wirePalette[i%wirePalette.length];
@@ -1121,6 +1179,7 @@ function buildEmbed(){
     </div>`;
   }).join('');
   document.getElementById('exportRow').style.display='flex';
+  saveState();
 }
 
 /* ---------------- EXPORT ---------------- */
@@ -1141,6 +1200,20 @@ function exportPack(){
   a.download='values-pack.md';
   a.click();
 }
+
+/* ---------------- init ---------------- */
+(function init(){
+  const restored=loadState();
+  // autosave context + answer fields as the user types
+  ['ctx_site','ctx_size','ctx_work','ctx_extra','q_product','q_want','q_proven','q_refuse']
+    .forEach(id=>{const el=document.getElementById(id); if(el)el.addEventListener('change',saveState);});
+  if(restored){flash('Picked up where you left off.');}
+})();
 </script>
+<!-- Vercel Analytics -->
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
