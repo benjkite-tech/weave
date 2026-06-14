@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weave — values woven through, not written on</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Yite Labs design system */
+  --ink:#1C0F08;
+  --ground:#F4F1EA;
+  --chalk:#FBFAF6;
+  --ash:#8A8178;
+  --ember:#E8501A;
+  --moss:#1A7A4A;
+  --denim:#2D4FA8;
+  --lavender:#7B5EA7;
+  --harvest:#C8A830;
+  --line:rgba(28,15,8,0.12);
+  --line-strong:rgba(28,15,8,0.24);
+
+  --fast:120ms;
+  --std:200ms;
+  --slow:400ms;
+
+  --r-sharp:0px;
+  --r-sub:3px;
+  --r-card:8px;
+  --r-pill:100px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--ground);
+  color:var(--ink);
+  font-family:"Space Grotesk",sans-serif;
+  font-weight:300;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+.mono{font-family:"Space Mono",monospace}
+.display{font-family:"Bebas Neue",sans-serif;letter-spacing:0.02em;line-height:0.92}
+
+/* ---------- shell ---------- */
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+header.top{
+  border-bottom:1px solid var(--line);
+  background:var(--chalk);
+  position:sticky;top:0;z-index:50;
+}
+.top-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand svg{display:block}
+.brand .name{font-family:"Bebas Neue";font-size:28px;letter-spacing:0.04em}
+.stamp{
+  font-family:"Space Mono";font-size:10px;text-transform:uppercase;letter-spacing:0.18em;
+  color:var(--ash);border:1px solid var(--line);padding:4px 9px;border-radius:var(--r-pill);
+}
+.keybtn{
+  font-family:"Space Mono";font-size:11px;letter-spacing:0.06em;
+  background:none;border:1px solid var(--line-strong);color:var(--ink);
+  padding:7px 14px;border-radius:var(--r-pill);cursor:pointer;transition:all var(--fast);
+}
+.keybtn:hover{background:var(--ink);color:var(--ground)}
+.keybtn.set{border-color:var(--moss);color:var(--moss)}
+.keybtn.set::before{content:"● ";font-size:8px;vertical-align:middle}
+
+/* ---------- hero ---------- */
+.hero{padding:84px 0 64px;border-bottom:1px solid var(--line)}
+.hero-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:48px;align-items:center}
+.hero-art{position:relative}
+.hero-art svg{max-width:360px;margin:0 auto;display:block;filter:drop-shadow(0 12px 28px rgba(28,15,8,0.14))}
+/* thread weaving animation: threads draw themselves through the systems */
+.weave-svg .warp{stroke-dasharray:300;stroke-dashoffset:300;animation:drawThread 2.4s ease-out forwards}
+.weave-svg .warp.w2{animation-delay:0.25s}
+.weave-svg .warp.w3{animation-delay:0.5s}
+.weave-svg .weft{stroke-dasharray:260;stroke-dashoffset:260;animation:drawThread 2s ease-out forwards}
+.weave-svg .weft.f2{animation-delay:0.7s}
+.weave-svg .weft.f3{animation-delay:0.95s}
+.weave-svg .node{opacity:0;animation:popNode 0.4s ease-out forwards}
+.weave-svg .node.n2{animation-delay:1.2s}
+.weave-svg .node.n3{animation-delay:1.5s}
+.weave-svg .node.n1{animation-delay:0.9s}
+@keyframes drawThread{to{stroke-dashoffset:0}}
+@keyframes popNode{0%{opacity:0;transform:scale(0.4)}100%{opacity:1;transform:scale(1)}}
+.hero .eyebrow{font-family:"Space Mono";font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:var(--ember);margin-bottom:22px}
+.hero h1{font-family:"Bebas Neue";font-size:clamp(56px,11vw,128px);line-height:0.86;letter-spacing:0.01em;max-width:13ch}
+.hero h1 .carve{position:relative;display:inline-block}
+.hero h1 .carve::after{content:"";position:absolute;left:0;right:0;bottom:0.12em;height:0.09em;background:var(--ember);transform:scaleX(0);transform-origin:left;animation:carve 900ms var(--slow) forwards;}
+@keyframes carve{to{transform:scaleX(1)}}
+.hero p.lede{font-size:clamp(17px,2.4vw,21px);max-width:54ch;margin-top:28px;color:rgba(28,15,8,0.78)}
+.hero .thesis{
+  margin-top:34px;border-left:3px solid var(--ink);padding:6px 0 6px 20px;
+  max-width:50ch;font-size:16px;
+}
+.hero .thesis b{font-weight:600}
+
+/* ---------- views (real pages) ---------- */
+.view{display:none}
+.view.show{display:block;animation:fade var(--std)}
+
+/* ---------- main nav ---------- */
+.brand{text-decoration:none;color:inherit}
+.mainnav{display:flex;align-items:center;gap:8px}
+.navlink{font-family:"Space Mono";font-size:13px;letter-spacing:0.04em;background:none;border:none;color:var(--ash);padding:9px 14px;cursor:pointer;border-radius:var(--r-pill);transition:color var(--fast)}
+.navlink:hover{color:var(--ink)}
+.navlink.active{color:var(--ink)}
+.navbtn{font-family:"Space Mono";font-size:13px;letter-spacing:0.04em;background:var(--ink);color:var(--ground);border:none;padding:9px 18px;border-radius:var(--r-pill);cursor:pointer;transition:all var(--fast)}
+.navbtn:hover{background:var(--ember)}
+.navbtn.active{background:var(--ember)}
+
+/* ---------- hero cta ---------- */
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+
+/* ---------- home thesis strip ---------- */
+.home-thesis{padding:48px 0 72px}
+.ht-line{font-size:clamp(18px,2.6vw,24px);line-height:1.5;max-width:30ch;color:var(--ink)}
+.ht-line b{font-weight:600}
+.ht-line{max-width:64ch}
+.ht-flow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:28px}
+.ht-step{font-family:"Space Mono";font-size:13px;letter-spacing:0.04em;color:rgba(28,15,8,0.8);border:1px solid var(--line-strong);padding:9px 16px;border-radius:var(--r-pill)}
+.ht-arrow{font-family:"Bebas Neue";font-size:24px;color:var(--line-strong)}
+
+/* ---------- how-it-works cta ---------- */
+.how-cta{padding:56px 0;border-top:1px solid var(--line);text-align:center}
+.how-cta p{font-family:"Bebas Neue";font-size:clamp(26px,4vw,38px);letter-spacing:0.02em;margin-bottom:18px}
+
+/* ---------- accordion teaching ---------- */
+.why-intro{padding:48px 0 8px}
+.why-intro .sec-label{margin-bottom:8px}
+.why-intro h2{font-family:"Bebas Neue";font-size:clamp(30px,5vw,46px);letter-spacing:0.02em;margin-bottom:12px}
+.why-intro p{font-size:16px;color:rgba(28,15,8,0.78);max-width:64ch}
+.acc{border-top:1px solid var(--line)}
+.acc details{border-bottom:1px solid var(--line)}
+.acc summary{list-style:none;cursor:pointer;padding:22px 0;display:flex;align-items:center;gap:16px;transition:color var(--fast)}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary:hover{color:var(--ember)}
+.acc .acc-num{font-family:"Space Mono";font-size:12px;letter-spacing:0.1em;color:var(--ash)}
+.acc .acc-title{font-family:"Bebas Neue";font-size:clamp(22px,3vw,30px);letter-spacing:0.02em;flex:1}
+.acc .acc-sub{font-size:13px;color:var(--ash);display:none}
+.acc .acc-chev{font-family:"Space Mono";font-size:18px;color:var(--ash);transition:transform var(--std)}
+.acc details[open] .acc-chev{transform:rotate(45deg)}
+.acc .acc-body{padding:0 0 32px;animation:fade var(--std)}
+@media(min-width:760px){.acc .acc-sub{display:block;margin-right:8px}}
+
+.tabpane-placeholder{display:none}
+
+/* ---------- company context ---------- */
+.context{padding:44px 0;border-bottom:1px solid var(--line)}
+.context-lede{font-size:16px;max-width:62ch;color:rgba(28,15,8,0.78);margin-bottom:30px}
+.context-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.ctx-field.full{grid-column:1/-1}
+.ctx-field .hint{font-size:13px;color:var(--ash);margin:4px 0 9px}
+
+/* ---------- chain band ---------- */
+.chain{padding:48px 0;border-bottom:1px solid var(--line);background:var(--chalk)}
+.chain-lede{font-size:16px;max-width:64ch;color:rgba(28,15,8,0.78);margin-bottom:38px}
+.chain-flow{display:flex;align-items:stretch;gap:0}
+.chain-drivers{display:flex;flex-direction:column;gap:14px;flex:1.1}
+.chain-drivers .chain-node{flex:1}
+.chain-node{flex:1;border:1px solid var(--line);border-radius:var(--r-card);padding:18px;background:var(--ground);display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:12px;align-content:start}
+.cn-art{margin:0;grid-row:1;grid-column:1;display:flex;align-items:center}
+.cn-art svg{width:34px;height:34px}
+.chain-node h4{font-family:"Bebas Neue";font-size:24px;letter-spacing:0.02em;margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;grid-row:1;grid-column:2;align-self:center}
+.chain-node p{font-size:13px;color:rgba(28,15,8,0.74);grid-row:2;grid-column:1/-1;margin-top:8px}
+.chain-node .chain-link{grid-column:1/-1}
+.chain-node.driver{padding:18px 20px}
+.chain-node.pivot{flex:1.1;border-color:var(--ember);border-width:1.5px;background:rgba(232,80,26,0.03)}
+.chain-node.accent{border-color:var(--ember)}
+.chain-node .here{font-family:"Space Mono";font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ember);border:1px solid var(--ember);padding:3px 7px;border-radius:var(--r-pill)}
+.chain-link{display:inline-block;margin-top:14px;font-family:"Space Mono";font-size:12px;letter-spacing:0.04em;color:var(--denim);text-decoration:none;border-bottom:1px solid var(--denim);padding-bottom:2px;transition:opacity var(--fast)}
+.chain-link:hover{opacity:0.65}
+.chain-arrow{display:flex;align-items:center;padding:0 18px;font-family:"Bebas Neue";font-size:34px;color:var(--line-strong)}
+
+/* ---------- panel head art ---------- */
+.panel-head.with-art{display:flex;gap:26px;align-items:flex-start;max-width:none}
+.panel-head.with-art .ph-text{max-width:62ch}
+.ph-art{flex-shrink:0;border:1px solid var(--line);border-radius:var(--r-card);padding:12px;background:var(--chalk)}
+.extract-how{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px;padding:14px 16px;background:var(--ground);border:1px dashed var(--line-strong);border-radius:var(--r-card)}
+.extract-how .eh-step{font-size:13.5px;color:rgba(28,15,8,0.82)}
+.extract-how .eh-step b{font-family:"Space Mono";color:var(--ember);margin-right:4px}
+.extract-how .eh-arrow{color:var(--line-strong);font-family:"Bebas Neue";font-size:20px}
+
+/* ---------- primer ---------- */
+.primer{padding:64px 0;border-bottom:1px solid var(--line)}
+.sec-label{font-family:"Space Mono";font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ash);margin-bottom:8px}
+.sec-title{font-family:"Bebas Neue";font-size:clamp(34px,5vw,52px);margin-bottom:28px}
+.primer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.pcard{border:1px solid var(--line);border-radius:var(--r-card);padding:18px;background:var(--chalk)}
+.pcard h3{font-family:"Bebas Neue";font-size:24px;letter-spacing:0.02em;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.pcard h3 .dot{width:10px;height:10px;border-radius:2px;display:inline-block}
+.pcard p{font-size:14px;color:rgba(28,15,8,0.74)}
+.tests-intro{margin-top:48px;padding-top:34px;border-top:2px solid var(--ink);max-width:64ch}
+.tests-h{font-family:"Bebas Neue";font-size:clamp(26px,3.6vw,38px);letter-spacing:0.02em;margin-bottom:10px}
+.tests-intro p{font-size:15px;color:rgba(28,15,8,0.76)}
+.tests-intro b{font-weight:600;color:var(--ink)}
+.tests{margin-top:22px;display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);border-radius:var(--r-card);overflow:hidden}
+.inline-tests{margin:0 0 26px}
+.test{padding:22px;border-right:1px solid var(--line)}
+.test:last-child{border-right:none}
+.test .n{font-family:"Bebas Neue";font-size:40px;color:var(--line-strong);line-height:1}
+.test h4{font-family:"Space Grotesk";font-weight:600;font-size:15px;margin:6px 0 6px}
+.test p{font-size:13px;color:rgba(28,15,8,0.7)}
+/* company proof cards */
+.proof{margin-top:48px;padding-top:34px;border-top:1px solid var(--line)}
+.proof-h{font-family:"Bebas Neue";font-size:clamp(24px,3.4vw,34px);letter-spacing:0.02em;margin-bottom:8px}
+.proof-lede{font-size:15px;color:rgba(28,15,8,0.76);max-width:60ch;margin-bottom:24px}
+.proof-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.proof-card{border:1px solid var(--line);border-radius:var(--r-card);padding:18px;background:var(--chalk);border-top:3px solid var(--ember)}
+.proof-card:nth-child(2){border-top-color:var(--denim)}
+.proof-card:nth-child(3){border-top-color:var(--harvest)}
+.proof-card:nth-child(4){border-top-color:var(--moss)}
+.pc-co{font-family:"Space Mono";font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ash)}
+.pc-val{font-family:"Bebas Neue";font-size:22px;letter-spacing:0.02em;margin:4px 0 10px;line-height:1.05}
+.pc-rules{font-size:13px;color:rgba(28,15,8,0.74);line-height:1.45}
+
+/* worked example payoff preview */
+.worked{padding:64px 0;border-bottom:1px solid var(--line);background:var(--chalk)}
+.worked-lede{font-size:16px;color:rgba(28,15,8,0.78);max-width:62ch;margin-bottom:30px}
+.worked-card{display:grid;grid-template-columns:1fr auto 1.1fr auto 1.1fr;gap:0;align-items:stretch}
+.wc-stage{border:1px solid var(--line);border-radius:var(--r-card);padding:20px;background:var(--ground);display:flex;flex-direction:column}
+.wc-tag{font-family:"Space Mono";font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--c);border:1px solid var(--c);padding:3px 9px;border-radius:var(--r-pill);align-self:flex-start;margin-bottom:12px}
+.wc-stage>p{font-size:13px;color:rgba(28,15,8,0.7);margin-bottom:12px}
+.wc-value{font-family:"Bebas Neue";font-size:30px;letter-spacing:0.02em;color:var(--ember);margin-top:auto}
+.wc-rule{font-size:14px;line-height:1.5;color:var(--ink);border-left:3px solid var(--harvest);padding-left:12px;margin-top:auto}
+.wc-scores{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.wc-scores span{font-family:"Space Mono";font-size:10px;letter-spacing:0.05em;color:var(--moss);border:1px solid rgba(26,122,74,0.4);border-radius:var(--r-pill);padding:3px 8px}
+.wc-code{font-family:"Space Mono";font-size:11.5px;line-height:1.65;background:var(--ink);color:#E8E2D8;border-radius:var(--r-sub);padding:14px;white-space:pre;overflow-x:auto;margin-top:auto}
+.wc-code .c{color:var(--ash)}.wc-code .k{color:var(--harvest)}.wc-code .s{color:#9FD8B4}
+.wc-arrow{display:flex;align-items:center;padding:0 14px;font-family:"Bebas Neue";font-size:30px;color:var(--line-strong)}
+
+/* ---------- pipeline progress ---------- */
+.pipe{padding:48px 0 0}
+.steps{display:flex;gap:0;border:1px solid var(--line-strong);border-radius:var(--r-pill);overflow:hidden;max-width:620px}
+.step{flex:1;text-align:center;padding:13px 8px;font-family:"Space Mono";font-size:12px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;background:var(--chalk);color:var(--ash);transition:all var(--std);border-right:1px solid var(--line)}
+.step:last-child{border-right:none}
+.step.active{background:var(--ink);color:var(--ground)}
+.step.done{color:var(--moss)}
+.step .sn{opacity:0.6;margin-right:6px}
+
+/* ---------- panels ---------- */
+.panel{padding:32px 0 64px;display:none;animation:fade var(--slow)}
+.panel.show{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.panel-head{max-width:62ch;margin-bottom:30px}
+.panel-head .sec-title{margin-bottom:12px}
+.panel-head p{font-size:16px;color:rgba(28,15,8,0.76)}
+
+label.fld{display:block;font-family:"Space Mono";font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ash);margin:0 0 8px}
+input[type=text],textarea,select{
+  width:100%;font-family:"Space Grotesk";font-weight:300;font-size:15px;color:var(--ink);
+  background:var(--chalk);border:1px solid var(--line-strong);border-radius:var(--r-sub);
+  padding:13px 15px;transition:border var(--fast);
+}
+textarea{resize:vertical;min-height:84px;line-height:1.5}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--ember)}
+.qblock{margin-bottom:26px}
+.qblock .hint{font-size:13px;color:var(--ash);margin:4px 0 10px}
+
+.btn{
+  font-family:"Space Mono";font-size:13px;letter-spacing:0.06em;
+  background:var(--ink);color:var(--ground);border:none;
+  padding:13px 24px;border-radius:var(--r-pill);cursor:pointer;transition:all var(--fast);
+  display:inline-flex;align-items:center;gap:9px;
+}
+.btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(28,15,8,0.16)}
+.btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;box-shadow:none}
+.btn.ghost{background:none;color:var(--ink);border:1px solid var(--line-strong)}
+.btn.ghost:hover{background:var(--ink);color:var(--ground)}
+.btn.ember{background:var(--ember)}
+.btnrow{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:8px}
+
+.ai-pill{font-family:"Space Mono";font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--lavender);border:1px solid var(--lavender);padding:3px 8px;border-radius:var(--r-pill)}
+
+/* extract output / value cards */
+.candidates{margin-top:34px;display:grid;gap:14px}
+.cand{
+  border:1px solid var(--line);border-radius:var(--r-card);padding:18px 20px;background:var(--chalk);
+  display:flex;gap:16px;align-items:flex-start;transition:all var(--fast);
+}
+.cand:hover{border-color:var(--line-strong)}
+.cand .pick{margin-top:3px;flex-shrink:0}
+.cand .pick input{width:18px;height:18px;accent-color:var(--ember);cursor:pointer}
+.cand .body{flex:1}
+.cand .vname{font-family:"Bebas Neue";font-size:23px;letter-spacing:0.02em}
+.cand .vbehaviour{font-size:14px;color:rgba(28,15,8,0.78);margin-top:3px}
+.cand .vsource{font-family:"Space Mono";font-size:11px;color:var(--ash);margin-top:8px}
+
+/* draft / sharpen */
+.draftcard{border:1px solid var(--line);border-radius:var(--r-card);padding:22px;background:var(--chalk);margin-bottom:18px}
+.draftcard .dc-top{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
+.draftcard .dc-name{font-family:"Bebas Neue";font-size:28px;letter-spacing:0.02em}
+.scorebar{display:flex;gap:6px;margin-top:14px}
+.score{flex:1;text-align:center;border:1px solid var(--line);border-radius:var(--r-sub);padding:10px 6px}
+.score .lbl{font-family:"Space Mono";font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ash)}
+.score .val{font-family:"Bebas Neue";font-size:26px;line-height:1;margin-top:3px}
+.score.pass .val{color:var(--moss)}
+.score.weak .val{color:var(--harvest)}
+.score.fail .val{color:var(--ember)}
+.flag{margin-top:14px;font-size:13.5px;padding:12px 14px;border-radius:var(--r-sub);line-height:1.5}
+.flag.bad{background:rgba(232,80,26,0.08);border:1px solid rgba(232,80,26,0.3);color:var(--ink)}
+.flag.good{background:rgba(26,122,74,0.08);border:1px solid rgba(26,122,74,0.3)}
+.flag b{font-weight:600}
+.rewrite{margin-top:12px}
+
+/* embed */
+.embed-val{border:1px solid var(--line);border-radius:var(--r-card);margin-bottom:18px;overflow:hidden;background:var(--chalk);border-left:3px solid var(--vc)}
+.embed-val .ev-head{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.embed-val .ev-head .vname{font-family:"Bebas Neue";font-size:24px;letter-spacing:0.02em}
+.embed-val .ev-head .ev-rule{font-size:13px;color:rgba(28,15,8,0.66);flex:1;min-width:200px}
+.surface-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.surface{padding:14px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.surface-head{font-family:"Space Mono";font-size:10.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--ash);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.surface-dot{width:6px;height:6px;border-radius:1px;background:var(--vc);flex-shrink:0}
+.surface-mech{font-size:13px;line-height:1.45;color:rgba(28,15,8,0.84)}
+/* 7 cells in a 4-col grid: clean up trailing borders */
+.surface:nth-child(4n){border-right:none}
+.surface:nth-child(n+5){border-bottom:none}
+
+/* empty / loading */
+.empty{border:1px dashed var(--line-strong);border-radius:var(--r-card);padding:48px 28px;text-align:center;color:var(--ash);font-size:15px}
+.empty .display{font-size:30px;color:var(--line-strong);margin-bottom:8px}
+.loading{display:inline-flex;gap:5px;align-items:center}
+.loading span{width:6px;height:6px;border-radius:50%;background:var(--ember);animation:bounce 600ms infinite alternate}
+.loading span:nth-child(2){animation-delay:150ms}
+.loading span:nth-child(3){animation-delay:300ms}
+@keyframes bounce{to{transform:translateY(-7px)}}
+
+/* modal */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(28,15,8,0.55);z-index:100;align-items:center;justify-content:center;padding:24px}
+.modal-bg.show{display:flex}
+.modal{background:var(--chalk);border-radius:var(--r-card);max-width:480px;width:100%;padding:32px}
+.modal h3{font-family:"Bebas Neue";font-size:30px;letter-spacing:0.02em;margin-bottom:6px}
+.modal p{font-size:14px;color:rgba(28,15,8,0.76);margin-bottom:18px}
+.modal p a{color:var(--ember)}
+.modal .btnrow{margin-top:18px}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
+.foot-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;font-family:"Space Mono";font-size:12px;color:var(--ash)}
+.foot-inner a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line-strong)}
+
+@media(max-width:760px){
+  .hero-grid{grid-template-columns:1fr;gap:24px}
+  .hero-art{order:-1}
+  .hero-art svg{max-width:240px}
+  .chain-flow{flex-direction:column;gap:14px}
+  .chain-drivers{flex-direction:column}
+  .chain-arrow{padding:0;transform:rotate(90deg);align-self:center}
+  .context-grid{grid-template-columns:1fr}
+  .tabs-hint{display:none}
+  .proof-grid{grid-template-columns:1fr 1fr}
+  .worked-card{grid-template-columns:1fr}
+  .wc-arrow{transform:rotate(90deg);align-self:center;padding:4px 0}
+  .panel-head.with-art{flex-direction:column;gap:16px}
+  .extract-how{flex-direction:column;align-items:flex-start;gap:8px}
+  .extract-how .eh-arrow{transform:rotate(90deg)}
+  .primer-grid{grid-template-columns:1fr}
+  .tests{grid-template-columns:1fr}
+  .test{border-right:none;border-bottom:1px solid var(--line)}
+  .test:last-child{border-bottom:none}
+  .surface-grid{grid-template-columns:1fr 1fr}
+  .surface:nth-child(4n){border-right:1px solid var(--line)}
+  .surface:nth-child(2n){border-right:none}
+  .surface:nth-child(n+5){border-bottom:1px solid var(--line)}
+  .surface:nth-last-child(-n+1){border-bottom:none}
+  .steps{font-size:10px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .hero h1 .carve::after{transform:scaleX(1)}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-inner">
+    <a class="brand" href="#" onclick="showView('home');return false;">
+      <!-- woven mark: two threads crossing over/under -->
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+        <rect x="3" y="3" width="24" height="24" rx="3" fill="#1C0F08"/>
+        <path d="M9 8 L9 22" stroke="#8A8178" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M21 8 L21 22" stroke="#8A8178" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M6 12 q4.5 -3 9 0 q4.5 3 9 0" stroke="#E8501A" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <path d="M6 18 q4.5 3 9 0 q4.5 -3 9 0" stroke="#1A7A4A" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <circle cx="15" cy="15" r="1.8" fill="#C8A830"/>
+      </svg>
+      <span class="name">WEAVE</span>
+    </a>
+    <nav class="mainnav">
+      <button class="navlink" data-view="how" onclick="showView('how')">How it works</button>
+      <button class="navbtn" data-view="build" onclick="showView('build')">Weave yours</button>
+    </nav>
+  </div>
+</header>
+
+<!-- ============================ HOME ============================ -->
+<div class="view show" id="view-home">
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <div class="eyebrow">Values · woven through, not written on</div>
+      <h1 class="display">WEAVE VALUES<br>THROUGHOUT<br>YOUR <span class="carve">ORG.</span></h1>
+      <p class="lede">Most companies' values are wall art. Weave threads yours through the software and rituals you actually run on — so they drive behaviour instead of decorating a careers page.</p>
+      <div class="hero-cta">
+        <button class="btn ember" onclick="showView('build')">Weave your values →</button>
+        <button class="btn ghost" onclick="showView('how')">How it works</button>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <!-- woven threads: vertical warp = the systems you run on; horizontal weft = values threaded through; nodes = where a value binds in -->
+      <svg viewBox="0 0 320 320" width="100%" xmlns="http://www.w3.org/2000/svg" class="weave-svg">
+        <!-- warp: the systems (vertical, muted) -->
+        <path class="warp w1" d="M88 28 L88 292" stroke="#8A8178" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.55"/>
+        <path class="warp w2" d="M160 28 L160 292" stroke="#8A8178" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.55"/>
+        <path class="warp w3" d="M232 28 L232 292" stroke="#8A8178" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.55"/>
+        <!-- weft: the values, weaving over and under the systems (pillar colours) -->
+        <path class="weft f1" d="M40 92 q24 -16 48 0 q24 16 36 0 q24 -16 36 0 q24 16 36 0 q24 -16 40 0" stroke="#E8501A" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <path class="weft f2" d="M40 160 q24 16 48 0 q24 -16 36 0 q24 16 36 0 q24 -16 36 0 q24 16 40 0" stroke="#2D4FA8" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <path class="weft f3" d="M40 228 q24 -16 48 0 q24 16 36 0 q24 -16 36 0 q24 16 36 0 q24 -16 40 0" stroke="#1A7A4A" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <!-- binding nodes: where a value locks into a system -->
+        <circle class="node n1" cx="88" cy="92" r="7" fill="#C8A830"/>
+        <circle class="node n2" cx="160" cy="160" r="7" fill="#C8A830"/>
+        <circle class="node n3" cx="232" cy="228" r="7" fill="#C8A830"/>
+        <!-- base shadow -->
+        <ellipse cx="160" cy="304" rx="118" ry="8" fill="#1C0F08" opacity="0.08"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- HOME: thesis strip -->
+<section class="home-thesis">
+  <div class="wrap">
+    <p class="ht-line"><b>A value written on a poster can be ignored. A value woven into your operating system can't</b> — pull the thread and the whole thing unravels. As we build more custom software, values should ship as configuration, not decoration.</p>
+    <div class="ht-flow">
+      <span class="ht-step">Extract from how you already work</span>
+      <span class="ht-arrow">→</span>
+      <span class="ht-step">Sharpen against three tests</span>
+      <span class="ht-arrow">→</span>
+      <span class="ht-step">Thread into your systems</span>
+    </div>
+  </div>
+</section>
+</div><!-- /view-home -->
+
+<!-- ============================ HOW IT WORKS ============================ -->
+<div class="view" id="view-how">
+
+<!-- ============ WHY VALUES ============ -->
+<div id="why">
+<section class="why-intro">
+  <div class="wrap">
+    <div class="sec-label">Why values</div>
+    <h2>THE CASE, IN THREE PARTS</h2>
+    <p>The short version: values are the convictions that turn your direction into behaviour, most companies' fail because they cost nothing and live on a wall, and the fix is to thread them through the systems you actually run on. Open any part below — or skip straight to building.</p>
+    <div class="acc">
+
+    <details open>
+      <summary><span class="acc-num">01</span><span class="acc-title">Where values sit</span><span class="acc-sub">Vision &amp; strategy → values → culture</span><span class="acc-chev">+</span></summary>
+      <div class="acc-body">
+    <p class="chain-lede">Two forces set your direction — <b>vision</b> (where you're going) and <b>strategy</b> (how you'll win). <b>Values</b> are the convictions that govern how you decide in service of it. <b>Culture</b> is the result — what people do when no one's looking. Values sit at the pivot: downstream of direction, upstream of behaviour.</p>
+    <div class="chain-flow">
+      <!-- dual drivers -->
+      <div class="chain-drivers">
+        <div class="chain-node driver">
+          <div class="cn-art" aria-hidden="true">
+            <svg viewBox="0 0 64 64" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="32" cy="32" r="22" fill="none" stroke="#C8A830" stroke-width="2.5"/>
+              <circle cx="32" cy="32" r="9" fill="none" stroke="#C8A830" stroke-width="2.5"/>
+              <circle cx="32" cy="32" r="2.6" fill="#E8501A"/>
+              <path d="M32 4 L32 12 M32 52 L32 60 M4 32 L12 32 M52 32 L60 32" stroke="#C8A830" stroke-width="2.4" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h4>Vision</h4>
+          <p>Where you're going and why it matters.</p>
+        </div>
+        <div class="chain-node driver">
+          <div class="cn-art" aria-hidden="true">
+            <svg viewBox="0 0 64 64" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 50 L26 30 L38 40 L52 16" fill="none" stroke="#2D4FA8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M44 14 L54 12 L52 22 Z" fill="#E8501A"/>
+              <circle cx="26" cy="30" r="2.6" fill="#2D4FA8"/>
+              <circle cx="38" cy="40" r="2.6" fill="#2D4FA8"/>
+            </svg>
+          </div>
+          <h4>Strategy</h4>
+          <p>How you'll win — the hard choices about where to play.</p>
+          <a class="chain-link" href="https://usegroundwork.vercel.app" target="_blank" rel="noopener">Build this in Groundwork →</a>
+        </div>
+      </div>
+      <div class="chain-arrow" aria-hidden="true">→</div>
+      <!-- values: the pivot -->
+      <div class="chain-node accent pivot">
+        <div class="cn-art" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="48" height="48" xmlns="http://www.w3.org/2000/svg">
+            <rect x="14" y="14" width="36" height="36" rx="5" fill="none" stroke="#E8501A" stroke-width="2.5"/>
+            <path d="M22 38 L22 32 L34 20 L42 28 L30 40 Z" fill="#E8501A"/>
+            <path d="M34 20 L42 28" stroke="#1C0F08" stroke-width="1.6"/>
+          </svg>
+        </div>
+        <h4>Values <span class="here">you are here</span></h4>
+        <p>The convictions that govern how you decide — the part Weave helps you thread through everything.</p>
+      </div>
+      <div class="chain-arrow" aria-hidden="true">→</div>
+      <!-- culture: the output -->
+      <div class="chain-node">
+        <div class="cn-art" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="48" height="48" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="24" cy="26" r="9" fill="none" stroke="#7B5EA7" stroke-width="2.5"/>
+            <circle cx="42" cy="26" r="9" fill="none" stroke="#7B5EA7" stroke-width="2.5"/>
+            <path d="M14 50 q10 -14 20 0" fill="none" stroke="#7B5EA7" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M32 50 q10 -14 20 0" fill="none" stroke="#1A7A4A" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h4>Culture</h4>
+        <p>The result — what people actually do when no one is looking.</p>
+      </div>
+    </div>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="acc-num">02</span><span class="acc-title">What they are &amp; why most fail</span><span class="acc-sub">The difference between a value and a platitude</span><span class="acc-chev">+</span></summary>
+      <div class="acc-body">
+    <div class="primer-grid">
+      <div class="pcard">
+        <h3><span class="dot" style="background:var(--ember)"></span>What they are</h3>
+        <p>Tie-breakers for when two good options conflict and there's no data left to settle it. Not a vibe — a decision rule. "When speed and polish collide, we ship and learn" is a value. "Excellence" is a mood.</p>
+      </div>
+      <div class="pcard">
+        <h3><span class="dot" style="background:var(--moss)"></span>Why they matter</h3>
+        <p>They let people make the call you'd make without asking. Done right, they scale judgement and speed up decisions. Done wrong, they're a trust tax — everyone sees the gap between the poster and the behaviour.</p>
+      </div>
+      <div class="pcard">
+        <h3><span class="dot" style="background:var(--denim)"></span>Why most fail</h3>
+        <p>Invented at an offsite as agreeable nouns that cost nothing and live nowhere but a wall. Nobody ever got fired for violating "Integrity." A value that can't be broken isn't a value — it's a platitude.</p>
+      </div>
+    </div>
+
+    <div class="proof">
+      <h3 class="proof-h">VALUES AS LEVERAGE, NOT LAMINATE</h3>
+      <p class="proof-lede">The companies whose values actually work all do the same thing: each value rules something specific <em>out</em>. That's the cost — and the clarity.</p>
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="pc-co">Amazon</div>
+          <div class="pc-val">"Day 1"</div>
+          <div class="pc-rules">Rules out: the comfort of treating past success as permission to slow down.</div>
+        </div>
+        <div class="proof-card">
+          <div class="pc-co">Netflix</div>
+          <div class="pc-val">"Team, not family"</div>
+          <div class="pc-rules">Rules out: keeping a loyal but underperforming employee out of sentiment.</div>
+        </div>
+        <div class="proof-card">
+          <div class="pc-co">Stripe</div>
+          <div class="pc-val">"Move with urgency &amp; focus"</div>
+          <div class="pc-rules">Rules out: perfectionism and scope creep that delay shipping.</div>
+        </div>
+        <div class="proof-card">
+          <div class="pc-co">Patagonia</div>
+          <div class="pc-val">"Cause no unnecessary harm"</div>
+          <div class="pc-rules">Rules out: profitable product lines that aren't environmentally sound.</div>
+        </div>
+      </div>
+    </div>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="acc-num">03</span><span class="acc-title">See one fully woven</span><span class="acc-sub">A worked example, end to end</span><span class="acc-chev">+</span></summary>
+      <div class="acc-body">
+    <p class="worked-lede">This is what Weave produces: a value that's been surfaced from how you already work, sharpened against the three tests, then threaded into the systems your org actually runs on. Not a poster — a working part.</p>
+    <div class="worked-card">
+      <div class="wc-stage">
+        <span class="wc-tag" style="--c:var(--ember)">01 · Extracted</span>
+        <p>From "we shipped a rough beta in 8 days and improved it in public" Weave surfaces a candidate value.</p>
+        <div class="wc-value">Ship &amp; Learn</div>
+      </div>
+      <div class="wc-arrow" aria-hidden="true">→</div>
+      <div class="wc-stage">
+        <span class="wc-tag" style="--c:var(--harvest)">02 · Sharpened</span>
+        <p>Scored against the three tests and rewritten until it can settle an argument.</p>
+        <div class="wc-rule">"When speed and polish collide, we ship the rough version to real users and improve it in the open — we never delay to perfect in private."</div>
+        <div class="wc-scores"><span>Costly 5</span><span>Specific 5</span><span>Opposable 4</span></div>
+      </div>
+      <div class="wc-arrow" aria-hidden="true">→</div>
+      <div class="wc-stage">
+        <span class="wc-tag" style="--c:var(--moss)">03 · Embedded</span>
+        <p>Wired into the deploy pipeline so the value enforces itself.</p>
+        <div class="wc-code"><span class="c">// deploy config</span>
+<span class="k">require_approval</span>: reversible ? <span class="s">false</span> : <span class="s">true</span>
+<span class="k">slack_alert</span>: <span class="s">"#shipped"</span> every deploy
+<span class="k">retro_prompt</span>: <span class="s">"what did we ship &amp; learn?"</span></div>
+      </div>
+    </div>
+      </div>
+    </details>
+
+    </div><!-- /acc -->
+  </div>
+</section>
+<section class="how-cta">
+  <div class="wrap">
+    <p>That's the case. Ready to weave your own?</p>
+    <button class="btn ember" onclick="showView('build')">Weave your values →</button>
+  </div>
+</section>
+</div><!-- /why -->
+</div><!-- /view-how -->
+
+<!-- ============================ WEAVE YOURS (BUILD) ============================ -->
+<div class="view" id="view-build">
+<div id="build">
+
+<!-- COMPANY CONTEXT -->
+<section class="context">
+  <div class="wrap">
+    <div class="sec-label">Optional — sharpens everything below</div>
+    <h2 class="sec-title">TELL WEAVE ABOUT YOUR ORG</h2>
+    <p class="context-lede">Values don't come from nowhere — they come from what you build, how big you are, and how you work. Give Weave this context and every value it surfaces gets more specific to you. All optional, but the more you share, the sharper the output.</p>
+    <div class="context-grid">
+      <div class="ctx-field full">
+        <label class="fld" for="ctx_site">Company website</label>
+        <div class="hint">Highest-signal input — Weave reads your product, market and tone from it.</div>
+        <input type="text" id="ctx_site" placeholder="https://yourcompany.com">
+      </div>
+      <div class="ctx-field">
+        <label class="fld" for="ctx_size">Size / stage</label>
+        <select id="ctx_size">
+          <option value="">Select…</option>
+          <option>Pre-seed / founding team (1–10)</option>
+          <option>Seed / early startup (11–50)</option>
+          <option>Scale-up (51–250)</option>
+          <option>Growth (251–1,000)</option>
+          <option>Enterprise (1,000+)</option>
+        </select>
+      </div>
+      <div class="ctx-field">
+        <label class="fld" for="ctx_work">Work approach</label>
+        <select id="ctx_work">
+          <option value="">Select…</option>
+          <option>Fully remote</option>
+          <option>Remote-first (some in-person)</option>
+          <option>Hybrid</option>
+          <option>Mostly in-person</option>
+          <option>Fully in-person</option>
+        </select>
+      </div>
+      <div class="ctx-field full">
+        <label class="fld" for="ctx_extra">Anything else worth knowing</label>
+        <div class="hint">Industry, mission, a defining constraint — whatever makes your org what it is.</div>
+        <input type="text" id="ctx_extra" placeholder="e.g. regulated fintech; mission-driven; founder-led; safety-critical hardware">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PIPELINE -->
+<section class="pipe">
+  <div class="wrap">
+    <div class="sec-label">The pipeline</div>
+    <div class="steps" id="steps">
+      <div class="step active" data-step="0" onclick="goStep(0)"><span class="sn">01</span>Extract</div>
+      <div class="step" data-step="1" onclick="goStep(1)"><span class="sn">02</span>Draft &amp; sharpen</div>
+      <div class="step" data-step="2" onclick="goStep(2)"><span class="sn">03</span>Embed</div>
+    </div>
+  </div>
+</section>
+
+<!-- PANEL 0: EXTRACT -->
+<section class="panel show" id="panel0">
+  <div class="wrap">
+    <div class="panel-head with-art">
+      <div class="ph-art" aria-hidden="true">
+        <svg viewBox="0 0 90 90" width="78" height="78" xmlns="http://www.w3.org/2000/svg">
+          <!-- excavation / dig: shovel unearthing a gem -->
+          <path d="M20 70 L40 50" stroke="#E8501A" stroke-width="3" stroke-linecap="round"/>
+          <path d="M14 76 L22 68 L26 72 L18 80 Z" fill="none" stroke="#E8501A" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M38 48 q6 -8 14 -2 q8 6 2 14 q-6 8 -14 2 q-8 -6 -2 -14Z" fill="none" stroke="#1C0F08" stroke-width="2.4"/>
+          <path d="M48 36 L54 30 M58 42 L66 40 M44 28 L46 20" stroke="#C8A830" stroke-width="2.6" stroke-linecap="round"/>
+          <path d="M44 52 L52 60 M52 50 L60 56" stroke="#7B5EA7" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="ph-text">
+      <h2 class="sec-title">EXTRACT — START WITH BEHAVIOURS</h2>
+      <p>Every good values exercise starts the same way: <b>not "what do we believe?" but "what do people actually do here when we're at our best?"</b> Values are the convictions underneath those behaviours. Weave pulls from four wells — what you <em>make</em>, what you <em>want</em>, what you've <em>proven</em>, and what you <em>refuse</em> — and reads the values out of your answers. <span class="ai-pill">AI-assisted</span></p>
+      <div class="extract-how">
+        <span class="eh-step"><b>Product.</b> What you make &amp; who for</span>
+        <span class="eh-arrow">→</span>
+        <span class="eh-step"><b>Want.</b> The behaviour you're driving</span>
+        <span class="eh-arrow">→</span>
+        <span class="eh-step"><b>Proven.</b> A decision that shows it's real</span>
+        <span class="eh-arrow">→</span>
+        <span class="eh-step"><b>Refuse.</b> The behaviour you won't tolerate</span>
+      </div>
+      </div>
+    </div>
+
+    <div class="qblock">
+      <label class="fld">1 · Product — what you make &amp; who for</label>
+      <div class="hint">What does your org make, and who for? The product is a values engine: a premium maker can't value "good enough," a safety-critical one can't value "move fast." Name what your product forces you to care about.</div>
+      <textarea id="q_product" placeholder="e.g. We make high-trust financial infrastructure for developers. A single outage breaks our customers' businesses — so reliability and craft aren't nice-to-haves, they're the product."></textarea>
+    </div>
+
+    <div class="qblock">
+      <label class="fld">2 · Want — the behaviour you're driving</label>
+      <div class="hint">When your org is at its best, what are people actually <em>doing</em>? Describe the behaviour you want more of — in plain action, not a noun. (Behaviours first, values second.)</div>
+      <textarea id="q_want" placeholder="e.g. People ship a rough version to real customers fast, then improve it in the open instead of polishing in private for weeks."></textarea>
+    </div>
+
+    <div class="qblock">
+      <label class="fld">3 · Proven — a decision that shows it's real</label>
+      <div class="hint">Point to one real decision in the last 6 months you're proud of — ideally one that <em>cost</em> you something. Values you've paid for are real; values you only aspire to are wallpaper.</div>
+      <textarea id="q_proven" placeholder="e.g. We walked away from our biggest-ever deal because the client wanted us to skip our security review. Lost the quarter, did it anyway."></textarea>
+    </div>
+
+    <div class="qblock">
+      <label class="fld">4 · Refuse — the behaviour you won't tolerate</label>
+      <div class="hint">What behaviour gets someone managed out, even if they're brilliant? A value is defined as much by what it rules out as what it rewards — this gives each one a real edge.</div>
+      <textarea id="q_refuse" placeholder="e.g. People who can't take feedback in the open. We've lost genuine stars over it and never regretted it."></textarea>
+    </div>
+
+    <div class="btnrow">
+      <button class="btn ember" id="extractBtn" onclick="runExtract()">Surface candidate values →</button>
+      <button class="btn ghost" onclick="loadSample()">Use a sample org</button>
+    </div>
+
+    <div class="candidates" id="candidates"></div>
+    <div class="btnrow" id="toDraftRow" style="display:none">
+      <button class="btn" onclick="buildDraft()">Take selected to sharpening →</button>
+    </div>
+  </div>
+</section>
+
+<!-- PANEL 1: DRAFT -->
+<section class="panel" id="panel1">
+  <div class="wrap">
+    <div class="panel-head with-art">
+      <div class="ph-art" aria-hidden="true">
+        <svg viewBox="0 0 90 90" width="78" height="78" xmlns="http://www.w3.org/2000/svg">
+          <!-- sharpening: blade against a whetstone with spark -->
+          <rect x="16" y="54" width="58" height="12" rx="6" fill="none" stroke="#1C0F08" stroke-width="2.4"/>
+          <path d="M26 52 L64 32 L70 40 L32 56 Z" fill="none" stroke="#2D4FA8" stroke-width="2.6" stroke-linejoin="round"/>
+          <path d="M62 30 L70 26 M68 36 L76 34 M58 24 L62 16" stroke="#E8501A" stroke-width="2.6" stroke-linecap="round"/>
+          <circle cx="48" cy="44" r="2" fill="#C8A830"/>
+        </svg>
+      </div>
+      <div class="ph-text">
+      <h2 class="sec-title">DRAFT &amp; SHARPEN</h2>
+      <p>Each value gets scored against the three tests — costly, specific, opposable. Anything scoring low is a dead value pretending to be alive. Rewrite until it can settle an argument. <span class="ai-pill">AI-assisted</span></p>
+      </div>
+    </div>
+    <div class="tests inline-tests">
+      <div class="test">
+        <div class="n">01</div>
+        <h4>Is it costly?</h4>
+        <p>A real value makes you say no to something attractive. If it never forces a sacrifice, it's decoration.</p>
+      </div>
+      <div class="test">
+        <div class="n">02</div>
+        <h4>Is it specific?</h4>
+        <p>Could it settle a real argument at 5pm on a Friday? "Disagree and commit" can; "Teamwork" can't.</p>
+      </div>
+      <div class="test">
+        <div class="n">03</div>
+        <h4>Defensible opposite?</h4>
+        <p>"Team, not family" works because firms sincerely choose family. If no one would pick the opposite, you've said nothing.</p>
+      </div>
+    </div>
+    <div id="draftList"></div>
+    <div class="btnrow" id="toEmbedRow" style="display:none">
+      <button class="btn ember" onclick="goStep(2);buildEmbed()">These are sharp — thread them in →</button>
+    </div>
+  </div>
+</section>
+
+<!-- PANEL 2: EMBED -->
+<section class="panel" id="panel2">
+  <div class="wrap">
+    <div class="panel-head with-art">
+      <div class="ph-art" aria-hidden="true">
+        <svg viewBox="0 0 90 90" width="78" height="78" xmlns="http://www.w3.org/2000/svg">
+          <!-- embed: value-gem plugged into a circuit -->
+          <path d="M38 30 q7 -9 16 -2 q9 7 2 16 q-7 9 -16 2 q-9 -7 -2 -16Z" fill="none" stroke="#1A7A4A" stroke-width="2.4"/>
+          <path d="M46 22 L50 16 M58 36 L66 34 M30 44 L22 46" stroke="#C8A830" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="M44 56 L44 70 L26 70 M52 54 L60 64 L74 64" stroke="#7B5EA7" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="26" cy="70" r="3.5" fill="none" stroke="#E8501A" stroke-width="2.4"/>
+          <circle cx="74" cy="64" r="3.5" fill="none" stroke="#E8501A" stroke-width="2.4"/>
+        </svg>
+      </div>
+      <div class="ph-text">
+      <h2 class="sec-title">EMBED — WEAVE IT THROUGH EVERYTHING</h2>
+      <p>This is where most value exercises stop and where the real work starts. A poster value lives in zero systems. A real one runs through several. For each value, here's how the same thread weaves through the seven systems that actually shape behaviour — so it can't quietly die.</p>
+      </div>
+    </div>
+    <div id="embedList"></div>
+    <div class="btnrow" id="exportRow" style="display:none">
+      <button class="btn" onclick="exportPack()">Export the values pack →</button>
+    </div>
+  </div>
+</section>
+</div><!-- /build -->
+</div><!-- /view-build -->
+
+<footer>
+  <div class="wrap foot-inner">
+    <span>WEAVE — a <a href="https://yitelabs.co" target="_blank" rel="noopener">Yite Labs</a> experiment</span>
+    <span>Values woven through, not written on.</span>
+  </div>
+</footer>
+
+<!-- KEY MODAL -->
+
+<script>
+/* ---------------- state ---------------- */
+let candidates = [];   // {name, behaviour, source, selected}
+let drafts = [];       // {name, behaviour, scores:{cost,spec,opp}, flag, flagType}
+let MODEL = "claude-sonnet-4-6";
+const AI_ON = true;    // AI is embedded via API; heuristics are the offline fallback
+
+/* ---------------- view switching (real pages) ---------------- */
+function showView(name){
+  document.querySelectorAll('.view').forEach(v=>v.classList.toggle('show',v.id==='view-'+name));
+  document.querySelectorAll('.navlink,.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.view===name));
+  window.scrollTo({top:0,behavior:'instant' in window?'instant':'auto'});
+}
+
+/* ---------------- company context ---------------- */
+function gatherContext(){
+  return {
+    site:document.getElementById('ctx_site').value.trim(),
+    size:document.getElementById('ctx_size').value.trim(),
+    work:document.getElementById('ctx_work').value.trim(),
+    extra:document.getElementById('ctx_extra').value.trim()
+  };
+}
+function contextBlock(){
+  const c=gatherContext();
+  const lines=[];
+  if(c.site)lines.push(`Website: ${c.site}`);
+  if(c.size)lines.push(`Size/stage: ${c.size}`);
+  if(c.work)lines.push(`Work approach: ${c.work}`);
+  if(c.extra)lines.push(`Other context: ${c.extra}`);
+  return lines.length?`COMPANY CONTEXT (use this to make values specific to them):\n${lines.join('\n')}\n\n`:'';
+}
+
+/* ---------------- step nav ---------------- */
+function goStep(n){
+  document.querySelectorAll('.panel').forEach((p,i)=>p.classList.toggle('show',i===n));
+  document.querySelectorAll('.step').forEach((s,i)=>{
+    s.classList.toggle('active',i===n);
+    s.classList.toggle('done',i<n);
+  });
+  window.scrollTo({top:document.querySelector('.pipe').offsetTop-20,behavior:'smooth'});
+}
+
+/* ---------------- AI helper ---------------- */
+async function askAI(system,user){
+  const res=await fetch("https://api.anthropic.com/v1/messages",{
+    method:"POST",
+    headers:{"Content-Type":"application/json","anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},
+    body:JSON.stringify({model:MODEL,max_tokens:1500,system:system,messages:[{role:"user",content:user}]})
+  });
+  if(!res.ok){throw new Error("API "+res.status);}
+  const data=await res.json();
+  const text=data.content.filter(b=>b.type==="text").map(b=>b.text).join("\n");
+  return text.replace(/```json|```/g,"").trim();
+}
+
+/* ---------------- EXTRACT ---------------- */
+function gatherAnswers(){
+  return {
+    product:document.getElementById('q_product').value.trim(),
+    want:document.getElementById('q_want').value.trim(),
+    proven:document.getElementById('q_proven').value.trim(),
+    refuse:document.getElementById('q_refuse').value.trim()
+  };
+}
+
+async function runExtract(){
+  const a=gatherAnswers();
+  if(!a.product&&!a.want&&!a.proven&&!a.refuse){alert("Answer at least one prompt — the behaviour you want, or what your product forces you to care about, is a good start.");return;}
+  const btn=document.getElementById('extractBtn');
+  btn.disabled=true;btn.innerHTML='<span class="loading"><span></span><span></span><span></span></span> reading the behaviours';
+
+  if(AI_ON){
+    try{
+      const sys="You are a values facilitator running a behaviour-first values exercise. The user gives four inputs: (product) what they make and who for, (want) a behaviour they want to drive, (proven) a real costly decision that proves a value, and (refuse) a behaviour they refuse to tolerate. The product/market is a structural source of values — a premium maker can't value 'good enough', a safety-critical one can't value 'move fast' — so weight it heavily. Read the values UNDERNEATH all four inputs and surface 5-6 candidate values. Each must be a behavioural rule that is costly (forces a real sacrifice), specific (could settle a real argument), and has a defensible opposite. Never output a generic noun like 'Integrity', 'Excellence', or 'Teamwork'. Return ONLY a JSON array, no prose. Each item: {\"name\":\"short punchy name, 1-4 words\",\"behaviour\":\"one sentence stating the actual rule of behaviour\",\"source\":\"product | want | proven | refuse\"}";
+      const usr=contextBlock()+`WHAT WE MAKE &amp; WHO FOR: ${a.product||'(blank)'}\nBEHAVIOUR WE WANT TO DRIVE: ${a.want||'(blank)'}\nA COSTLY DECISION THAT PROVES A VALUE: ${a.proven||'(blank)'}\nBEHAVIOUR WE REFUSE TO TOLERATE: ${a.refuse||'(blank)'}`;
+      const out=await askAI(sys,usr);
+      candidates=JSON.parse(out).map(c=>({...c,selected:true}));
+    }catch(e){
+      candidates=heuristicExtract(a);
+    }
+  }else{
+    candidates=heuristicExtract(a);
+  }
+  renderCandidates();
+  btn.disabled=false;btn.textContent='Re-surface candidates →';
+}
+
+function heuristicExtract(a){
+  const out=[];
+  if(a.product)out.push({name:"Earn The Trust",behaviour:"Because of what we make, we hold a standard our customers are betting their own business on — and we never quietly lower it.",source:"product",selected:true});
+  if(a.want)out.push({name:"Ship &amp; Learn",behaviour:"We reward the rough thing shipped to real users and improved in the open over the perfect thing delayed.",source:"want",selected:true});
+  if(a.proven)out.push({name:"Costly Conviction",behaviour:"We make the principled call even when it costs us the deal, the quarter, or the easy path — and we name the cost out loud.",source:"proven",selected:true});
+  if(a.refuse)out.push({name:"Feedback In The Open",behaviour:"We part ways with people who can't give or take honest feedback in the room, however talented.",source:"refuse",selected:true});
+  out.push({name:"Bias To Motion",behaviour:"When speed and polish collide, we choose speed and accept the bugs that follow.",source:"inferred",selected:true});
+  return out;
+}
+
+function renderCandidates(){
+  const el=document.getElementById('candidates');
+  el.innerHTML=candidates.map((c,i)=>`
+    <div class="cand">
+      <label class="pick"><input type="checkbox" ${c.selected?'checked':''} onchange="candidates[${i}].selected=this.checked"></label>
+      <div class="body">
+        <div class="vname">${c.name}</div>
+        <div class="vbehaviour">${c.behaviour}</div>
+        <div class="vsource">from: ${c.source}</div>
+      </div>
+    </div>`).join('');
+  document.getElementById('toDraftRow').style.display='flex';
+}
+
+function loadSample(){
+  document.getElementById('q_product').value="We make high-trust payments infrastructure for developers. When our API goes down, our customers' checkout goes down — so reliability and craft aren't features, they're the whole product.";
+  document.getElementById('q_want').value="When we're at our best, people ship a deliberately rough version to real customers in days, then rebuild it in the open with their feedback — instead of polishing in private for a month.";
+  document.getElementById('q_proven').value="We walked away from our biggest-ever enterprise deal because they wanted us to skip our security review to hit their timeline. Hurt that quarter badly. Did it anyway.";
+  document.getElementById('q_refuse').value="People who can't take feedback in the open or be wrong in a room. We've let go of two genuinely brilliant people over it and never regretted it.";
+}
+
+/* ---------------- DRAFT & SHARPEN ---------------- */
+function scoreValue(behaviour,name){
+  // heuristic scoring 0-5 against the three tests
+  const b=(behaviour||'').toLowerCase();
+  const generic=['integrity','excellence','teamwork','innovation','respect','quality','passion','trust','accountability'];
+  const isGeneric=generic.some(g=>name.toLowerCase().includes(g)||b.trim().split(' ').length<5);
+  const costWords=['even','cost','sacrifice','say no','walk away','turn down','give up','accept','lose','hurt'];
+  const specWords=['when','we choose','we ship','we reward','we part','rather than','instead of','default'];
+  const oppWords=['speed','team not','rough','reversible','open','less','fast'];
+  const cost=isGeneric?1:(costWords.some(w=>b.includes(w))?5:3);
+  const spec=isGeneric?1:(specWords.some(w=>b.includes(w))?5:3);
+  const opp=isGeneric?1:(oppWords.some(w=>b.includes(w))?4:3);
+  return {cost,spec,opp};
+}
+function scoreClass(v){return v>=4?'pass':v>=2.5?'weak':'fail';}
+
+async function buildDraft(){
+  drafts=candidates.filter(c=>c.selected).map(c=>({
+    name:c.name,behaviour:c.behaviour,scores:scoreValue(c.behaviour,c.name),flag:null,flagType:null
+  }));
+  if(drafts.length===0){alert("Select at least one value to take forward.");return;}
+  goStep(1);
+  renderDrafts();
+}
+
+function renderDrafts(){
+  const el=document.getElementById('draftList');
+  if(drafts.length===0){el.innerHTML='<div class="empty"><div class="display">NOTHING TO SHARPEN YET</div>Go back to Extract and select some candidates.</div>';return;}
+  el.innerHTML=drafts.map((d,i)=>{
+    const s=d.scores;const avg=(s.cost+s.spec+s.opp)/3;
+    let flag=d.flag,ft=d.flagType;
+    if(!flag){
+      if(avg<2.5){flag="<b>Dead value alert.</b> This reads like a poster word. It costs nothing, settles no argument, and nobody would defend the opposite. Rewrite it as a behaviour with a real tradeoff.";ft='bad';}
+      else if(avg<4){flag="<b>Getting there.</b> Sharpen the weakest test below. The best values name the exact moment they kick in and what you give up.";ft='bad';}
+      else{flag="<b>Sharp.</b> Costly, specific, and has a defensible opposite. This one can settle a real argument.";ft='good';}
+    }
+    return `
+    <div class="draftcard">
+      <div class="dc-top">
+        <div>
+          <input type="text" value="${d.name.replace(/"/g,'&quot;')}" onchange="drafts[${i}].name=this.value" style="font-family:'Bebas Neue';font-size:26px;border:none;background:none;padding:0;width:auto;letter-spacing:0.02em">
+        </div>
+      </div>
+      <textarea onchange="drafts[${i}].behaviour=this.value;drafts[${i}].scores=scoreValue(this.value,drafts[${i}].name);drafts[${i}].flag=null;renderDrafts()">${d.behaviour}</textarea>
+      <div class="scorebar">
+        <div class="score ${scoreClass(s.cost)}"><div class="lbl">Costly</div><div class="val">${s.cost}</div></div>
+        <div class="score ${scoreClass(s.spec)}"><div class="lbl">Specific</div><div class="val">${s.spec}</div></div>
+        <div class="score ${scoreClass(s.opp)}"><div class="lbl">Opposable</div><div class="val">${s.opp}</div></div>
+      </div>
+      <div class="flag ${ft}">${flag}</div>
+      <div class="btnrow rewrite">
+        <button class="btn ghost" onclick="aiRewrite(${i})">AI: sharpen this value</button>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('toEmbedRow').style.display='flex';
+}
+
+async function aiRewrite(i){
+  const d=drafts[i];
+  if(AI_ON){
+    try{
+      const sys="You sharpen company values. Rewrite the given value so it is costly (forces a real sacrifice), specific (settles an actual argument), and has a defensible opposite. Keep the name punchy (1-4 words). Return ONLY JSON: {\"name\":\"...\",\"behaviour\":\"one sentence behavioural rule\"}";
+      const out=await askAI(sys,`Value name: ${d.name}\nCurrent statement: ${d.behaviour}`);
+      const r=JSON.parse(out);
+      drafts[i].name=r.name;drafts[i].behaviour=r.behaviour;
+      drafts[i].scores=scoreValue(r.behaviour,r.name);drafts[i].flag=null;
+    }catch(e){heuristicRewrite(i);}
+  }else{heuristicRewrite(i);}
+  renderDrafts();
+}
+function heuristicRewrite(i){
+  const d=drafts[i];
+  if(!/^when |we /i.test(d.behaviour)){
+    drafts[i].behaviour="When "+d.name.toLowerCase()+" conflicts with the easy path, we choose it and accept the cost — name the cost out loud.";
+    drafts[i].scores=scoreValue(drafts[i].behaviour,d.name);drafts[i].flag=null;
+  }
+}
+
+/* ---------------- EMBED ---------------- */
+const wirePalette=['var(--ember)','var(--moss)','var(--denim)','var(--lavender)','var(--harvest)'];
+
+// the seven embedding surfaces — a value only drives behaviour when it's woven through several
+const SURFACES=[
+  {key:'os',    label:'Operating system', sub:'how you run the stack'},
+  {key:'decide',label:'Decisions & alignment', sub:'the rule for hard calls'},
+  {key:'reward',label:'Rewards', sub:'comp, promo, recognition'},
+  {key:'feedback',label:'Feedback', sub:'reviews, 1:1s, retros'},
+  {key:'hiring',label:'Hiring & onboarding', sub:'select for it at the door'},
+  {key:'rituals',label:'Rituals & symbols', sub:'what gets practised & told'},
+  {key:'resource',label:'Resource allocation', sub:'where budget & people go'}
+];
+
+function embedFor(name,behaviour){
+  const b=behaviour.toLowerCase();
+  let theme='general';
+  if(/speed|fast|ship|motion|urgen/.test(b))theme='speed';
+  else if(/customer|user|client/.test(b))theme='customer';
+  else if(/feedback|open|transparen|honest/.test(b))theme='transparency';
+  else if(/cost|say no|walk|sacrifice|principle|convict/.test(b))theme='conviction';
+  else if(/quality|craft|polish|care|trust|reliab/.test(b))theme='quality';
+
+  const lib={
+    speed:{
+      os:'Reversible changes skip the approval gate; PRs auto-deploy with a #shipped alert.',
+      decide:'Default rule: if it\'s reversible, decide in the meeting — no second sign-off.',
+      reward:'Promotion criteria reward shipped-and-iterated over polished-but-late.',
+      feedback:'Retros open with "what did we ship and learn?" not "what went wrong?".',
+      hiring:'Interview for bias-to-action: "tell me about something you shipped before it was ready."',
+      rituals:'Weekly demo of work shipped replaces the written status update.',
+      resource:'Time-boxed budgets; teams that move fast get the next tranche faster.'
+    },
+    customer:{
+      os:'A "did we make their day?" modal fires after every support interaction into a live delight score.',
+      decide:'Ties break toward the customer; "what would the user want?" is the tabled question.',
+      reward:'Recognition goes to the person who caught a customer problem early, not just shipped features.',
+      feedback:'Every review cites a real customer outcome the person drove.',
+      hiring:'Screen for customer empathy; candidates walk through a real user problem live.',
+      rituals:'Every all-hands opens with one verbatim customer quote — good or brutal.',
+      resource:'Support and research are funded as first-class, not overhead to be trimmed.'
+    },
+    transparency:{
+      os:'Docs default to all-company; private needs a stated reason. Post-mortems auto-publish.',
+      decide:'Decisions are logged in the open with the reasoning, not DMed.',
+      reward:'Recognise the person who surfaced the hard truth, not the one who kept the peace.',
+      feedback:'Feedback is given in the room and attributed — no anonymous triangulation.',
+      hiring:'Test for it: ask candidates to disagree with you in the interview.',
+      rituals:'Blameless post-mortems shared company-wide become the stories that get retold.',
+      resource:'Fund the tooling that makes information open by default, not gated.'
+    },
+    conviction:{
+      os:'Decision records require a "what we gave up for this" field; a public convictions log.',
+      decide:'When a call compromises a core principle, it escalates by default — no quiet trade.',
+      reward:'Celebrate the person who raised the uncomfortable "no", even when it cost the deal.',
+      feedback:'Reviews ask: "where did you hold the line when it was expensive?"',
+      hiring:'Probe for it: "tell me about a time you walked away from something attractive on principle."',
+      rituals:'Keep a visible "deals we walked away from" list; leaders narrate the cost out loud.',
+      resource:'Protect budget for the principled choice so it isn\'t the first thing cut under pressure.'
+    },
+    quality:{
+      os:'Release gate: craft review must pass and a named owner must sign their name to it.',
+      decide:'Quality bar beats the deadline on customer-facing work — the rule is explicit, not heroic.',
+      reward:'Promote the people whose work others trust by default, not just the fastest shippers.',
+      feedback:'Reviews rate craft against a shared standard, with examples, not vibes.',
+      hiring:'Work-sample the real thing; assess the standard they hold, not the résumé.',
+      rituals:'Celebrate the catch and the fix, not only the launch.',
+      resource:'Fund the time and tools for craft — refactoring and polish are line items, not guilt.'
+    },
+    general:{
+      os:'Make this value a required field in a system you already run — a template, a checklist, a default.',
+      decide:'Name it as the tie-breaker when two good options conflict; write the rule down.',
+      reward:'Cite it explicitly in promotion decisions — show the receipts.',
+      feedback:'Add it to the review template as a behaviour rated with examples.',
+      hiring:'Turn it into a real interview signal, not a poster in the lobby.',
+      rituals:'Open one recurring ritual with a story of this value in action.',
+      resource:'Put budget or headcount behind it — the truest signal of what you value.'
+    }
+  };
+  return {theme, map:lib[theme]};
+}
+
+function buildEmbed(){
+  const el=document.getElementById('embedList');
+  const finals=drafts;
+  if(finals.length===0){el.innerHTML='<div class="empty"><div class="display">NOTHING TO WEAVE IN</div>Sharpen some values first.</div>';return;}
+  el.innerHTML=finals.map((d,i)=>{
+    const e=embedFor(d.name,d.behaviour);
+    const col=wirePalette[i%wirePalette.length];
+    const cells=SURFACES.map(s=>`
+      <div class="surface">
+        <div class="surface-head"><span class="surface-dot"></span>${s.label}</div>
+        <div class="surface-mech">${e.map[s.key]}</div>
+      </div>`).join('');
+    return `
+    <div class="embed-val" style="--vc:${col}">
+      <div class="ev-head">
+        <span class="dot" style="width:12px;height:12px;border-radius:2px;background:${col};display:inline-block"></span>
+        <span class="vname">${d.name}</span>
+        <span class="ev-rule">${d.behaviour}</span>
+      </div>
+      <div class="surface-grid">${cells}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('exportRow').style.display='flex';
+}
+
+/* ---------------- EXPORT ---------------- */
+function exportPack(){
+  let md=`# Values Pack\n_Woven with Weave — Yite Labs_\n\n`;
+  md+=`> A value written on a poster can be ignored. A value encoded in your operating system can't.\n\n---\n\n`;
+  drafts.forEach((d,i)=>{
+    const e=embedFor(d.name,d.behaviour);
+    md+=`## ${i+1}. ${d.name}\n\n**The rule:** ${d.behaviour}\n\n`;
+    md+=`**Scores** — Costly: ${d.scores.cost}/5 · Specific: ${d.scores.spec}/5 · Opposable: ${d.scores.opp}/5\n\n`;
+    md+=`**Woven through:**\n\n`;
+    SURFACES.forEach(s=>{ md+=`- **${s.label}** — ${e.map[s.key]}\n`; });
+    md+=`\n---\n\n`;
+  });
+  const blob=new Blob([md],{type:'text/markdown'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='values-pack.md';
+  a.click();
+}
+</script>
+</body>
+</html>
