@@ -283,6 +283,8 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--ember)}
 .btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(28,15,8,0.16)}
 .btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;box-shadow:none}
 .btn.ghost{background:none;color:var(--ink);border:1px solid var(--line-strong)}
+.btn.subtle-btn{color:var(--ash);border-color:var(--line);margin-left:auto}
+.btn.subtle-btn:hover{color:var(--ember);border-color:var(--ember)}
 .btn.ghost:hover{background:var(--ink);color:var(--ground)}
 .btn.ember{background:var(--ember)}
 .btnrow{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:8px}
@@ -796,6 +798,7 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
       <button class="btn ember" id="extractBtn" onclick="runExtract()">Find my values →</button>
       <button class="btn ghost" onclick="loadSample()">Try a sample org</button>
       <button class="btn ghost" onclick="testAI(this)" title="Check the AI connection">Test AI</button>
+      <button class="btn ghost subtle-btn" onclick="clearGather()" title="Clear all answers">Clear</button>
     </div>
 
     <div class="candidates" id="candidates"></div>
@@ -956,6 +959,12 @@ function loadState(){
     if(drafts.length)renderDrafts();
     return candidates.length||drafts.length;
   }catch(e){return false;}
+}
+function clearGather(){
+  const hasContent = ['q_product','q_want','q_proven','q_refuse'].some(id=>{const el=document.getElementById(id);return el&&el.value.trim();}) || candidates.length || drafts.length;
+  if(hasContent && !confirm('Clear your answers and start fresh? This also clears any values you\'ve gathered.'))return;
+  clearState();
+  flash('Cleared — fresh start.');
 }
 function clearState(){
   try{localStorage.removeItem(STORE_KEY);}catch(e){}
