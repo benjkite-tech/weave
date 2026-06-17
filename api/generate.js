@@ -5,14 +5,26 @@ import { generateText } from 'ai';
  * Body: { system: string, prompt: string }
  * Returns: { text: string }
  *
- * Auth: server-side only. Set ONE of these in Vercel env:
- *   - AI_GATEWAY_API_KEY  → routes through Vercel AI Gateway (recommended; usage tracking, model switching)
- *   - ANTHROPIC_API_KEY   → talks to Anthropic directly via the AI SDK provider
+ * Uses the Vercel AI Gateway. A plain model string ("anthropic/...") routes
+ * through the Gateway automatically. Auth resolves from AI_GATEWAY_API_KEY
+ * (set in project env) or, on deployed Vercel functions, the OIDC token.
+ * BYOK provider credentials (team level) are used downstream — no code change.
  * The key is NEVER exposed to the browser.
  */
 
-// Model is configurable via env so you can switch without a code change.
 const MODEL = process.env.WEAVE_MODEL || 'anthropic/claude-sonnet-4.5';
+
+// Best-effort in-memory rate limit (per warm instance).
+const RATE = { windowMs: 60_000, max: 20 };
+const hits = new Map();
+function limited(ip) {
+  const now = Date.now();
+  const arr = (hits.get(ip) || []).filter((t) => now - t < RATE.windowMs);
+  arr.push(now);
+  hits.set(ip, arr);
+  if (hits.size > 5000) hits.clear();
+  return arr.length > RATE.max;
+}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -20,31 +32,24 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'unknown';
+  if (limited(ip)) {
+    return res.status(429).json({ error: 'Too many requests — slow down a moment and try again.' });
+  }
+
   try {
     const { system, prompt } = req.body || {};
     if (!prompt) return res.status(400).json({ error: 'Missing prompt' });
-
-    let model;
-
-    if (process.env.AI_GATEWAY_API_KEY) {
-      // Default path: AI Gateway resolves the "anthropic/..." string automatically.
-      model = MODEL;
-    } else if (process.env.ANTHROPIC_API_KEY) {
-      // Direct path: use the Anthropic provider with your raw Claude key.
-      const { anthropic } = await import('@ai-sdk/anthropic');
-      // Strip the "anthropic/" prefix the gateway uses; provider wants the bare id.
-      model = anthropic(MODEL.replace(/^anthropic\//, ''));
-    } else {
-      return res.status(500).json({
-        error: 'No API key configured. Set AI_GATEWAY_API_KEY or ANTHROPIC_API_KEY in your Vercel project.',
-      });
+    if (typeof prompt === 'string' && prompt.length > 8000) {
+      return res.status(400).json({ error: 'Prompt too long' });
     }
 
+    // Plain string model → routes through the AI Gateway. No provider package needed.
     const { text } = await generateText({
-      model,
+      model: MODEL,
       system: system || undefined,
       prompt,
-      maxTokens: 1500,
+      maxOutputTokens: 1500,
     });
 
     return res.status(200).json({ text });
