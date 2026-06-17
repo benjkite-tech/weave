@@ -123,6 +123,9 @@ header.top{
 .ht-line{max-width:64ch}
 .ht-flow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:28px}
 .ht-step{font-family:"Space Mono";font-size:13px;letter-spacing:0.04em;color:rgba(28,15,8,0.8);border:1px solid var(--line-strong);padding:9px 16px;border-radius:var(--r-pill)}
+.ht-step b{color:var(--ember);font-weight:700;margin-right:4px}
+.ht-more{font-family:"Space Mono";font-size:13px;letter-spacing:0.04em;color:var(--denim);cursor:pointer;border-bottom:1px solid var(--denim);padding-bottom:2px;margin-left:8px}
+.ht-more:hover{opacity:0.7}
 .ht-arrow{font-family:"Bebas Neue";font-size:24px;color:var(--line-strong)}
 
 /* ---------- how-it-works cta ---------- */
@@ -327,6 +330,34 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--ember)}
 .flag b{font-weight:600}
 .rewrite{margin-top:12px}
 
+/* prioritise — cut + tension */
+.prio-block{margin-bottom:36px}
+.prio-h{font-family:"Bebas Neue";font-size:24px;letter-spacing:0.02em;display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.prio-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--ground);font-family:"Space Mono";font-size:13px}
+.prio-count{font-family:"Space Mono";font-size:12px;letter-spacing:0.04em;padding:3px 10px;border-radius:var(--r-pill);margin-left:auto}
+.prio-count.good{background:rgba(26,122,74,0.12);color:var(--moss)}
+.prio-count.over{background:rgba(232,80,26,0.12);color:var(--ember)}
+.prio-count.under{background:rgba(138,129,120,0.15);color:var(--ash)}
+.prio-sub{font-size:14px;line-height:1.5;color:rgba(28,15,8,0.7);max-width:64ch;margin-bottom:16px}
+.cut-list{display:flex;flex-direction:column;gap:8px}
+.cut-item{display:grid;grid-template-columns:auto auto 1fr;align-items:center;gap:12px;padding:14px 16px;border:1px solid var(--line);border-radius:var(--r-sub);background:var(--chalk);cursor:pointer;transition:opacity var(--fast),border var(--fast)}
+.cut-item:hover{border-color:var(--line-strong)}
+.cut-item.dropped{opacity:0.42}
+.cut-item input{width:18px;height:18px;accent-color:var(--ember);cursor:pointer}
+.cut-name{font-family:"Bebas Neue";font-size:20px;letter-spacing:0.02em}
+.cut-rule{font-size:13px;color:rgba(28,15,8,0.66);line-height:1.4}
+.tension-list{display:flex;flex-direction:column;gap:12px}
+.tension{padding:16px 18px;border:1px solid var(--line);border-radius:var(--r-sub);background:var(--chalk)}
+.tension-q{font-size:15px;margin-bottom:12px}
+.tension-q b{font-weight:600}
+.tension-opts{display:flex;gap:8px;flex-wrap:wrap}
+.t-opt{font-family:"Space Grotesk";font-weight:500;font-size:13px;padding:8px 16px;border-radius:var(--r-pill);border:1px solid var(--line-strong);background:transparent;color:var(--ink);cursor:pointer;transition:all var(--fast)}
+.t-opt:hover{border-color:var(--ember)}
+.t-opt.on{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+.t-opt.subtle{color:var(--ash)}
+.t-opt.subtle.on{background:var(--ash);color:var(--ground);border-color:var(--ash)}
+@media(max-width:760px){.cut-item{grid-template-columns:auto 1fr;row-gap:4px}.cut-rule{grid-column:2}}
+
 /* embed — three buckets per value */
 .embed-val{border:1px solid var(--line);border-radius:var(--r-card);margin-bottom:20px;overflow:hidden;background:var(--chalk);border-left:3px solid var(--vc)}
 .embed-val .ev-head{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap}
@@ -344,7 +375,14 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--ember)}
 .surface{padding:13px 18px;border-bottom:1px dashed var(--line)}
 .surface:last-child{border-bottom:none}
 .surface-head{font-family:"Space Mono";font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--vc);margin-bottom:5px}
-.surface-mech{font-size:13px;line-height:1.5;color:rgba(28,15,8,0.84)}
+.surface-mech{font-size:13px;line-height:1.5;color:rgba(28,15,8,0.84);border-radius:4px;transition:background var(--fast);outline:none}
+.surface-mech[contenteditable]:hover{background:rgba(28,15,8,0.03)}
+.surface-mech[contenteditable]:focus{background:#fff;box-shadow:0 0 0 2px var(--vc)}
+.vname[contenteditable]:focus,.ev-rule[contenteditable]:focus{outline:none;background:#fff;box-shadow:0 0 0 2px var(--vc);border-radius:4px}
+.ev-edit-hint{display:block;font-family:"Space Mono";font-size:9px;letter-spacing:0.06em;color:var(--ash);margin-top:4px;text-transform:none}
+.ev-tension{margin-top:10px;display:flex;flex-direction:column;gap:3px}
+.ev-tension span{font-family:"Space Mono";font-size:11px;letter-spacing:0.02em;color:var(--denim)}
+.ev-tension b{font-weight:400;color:var(--ink)}
 
 /* empty / loading */
 .empty{border:1px dashed var(--line-strong);border-radius:var(--r-card);padding:48px 28px;text-align:center;color:var(--ash);font-size:15px}
@@ -431,10 +469,9 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
     <div class="hero-copy">
       <div class="eyebrow">Values that run your org, not your wall</div>
       <h1 class="display">WEAVE VALUES<br>THROUGHOUT<br>YOUR <span class="carve">ORG.</span></h1>
-      <p class="lede">Most companies' values are wall art. Weave threads yours through the software and rituals you actually run on — so they drive behaviour instead of decorating a careers page.</p>
+      <p class="lede">Most companies' values are wall art. Weave threads yours through everything that shapes behaviour — what you build, how you run, and how you treat people — so they drive the org instead of decorating a careers page.</p>
       <div class="hero-cta">
         <button class="btn ember" onclick="showView('build')">Weave your values →</button>
-        <button class="btn ghost" onclick="showView('how')">How it works</button>
       </div>
     </div>
     <div class="hero-art" aria-hidden="true">
@@ -459,16 +496,16 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
   </div>
 </section>
 
-<!-- HOME: thesis strip -->
+<!-- HOME: three-step teaser (no argument — that lives in How it works) -->
 <section class="home-thesis">
   <div class="wrap">
-    <p class="ht-line"><b>The difference:</b> a poster you can ignore. A value woven into your systems you can't — pull the thread and the whole thing unravels.</p>
     <div class="ht-flow">
-      <span class="ht-step">Gather from how you already work</span>
+      <span class="ht-step"><b>1.</b> Gather</span>
       <span class="ht-arrow">→</span>
-      <span class="ht-step">Sharpen against three tests</span>
+      <span class="ht-step"><b>2.</b> Shape</span>
       <span class="ht-arrow">→</span>
-      <span class="ht-step">Thread into your systems</span>
+      <span class="ht-step"><b>3.</b> Weave in</span>
+      <a class="ht-more" onclick="showView('how')">See how it works →</a>
     </div>
   </div>
 </section>
@@ -483,7 +520,7 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
   <div class="wrap">
     <div class="sec-label">Why values</div>
     <h2>THE CASE, IN THREE PARTS</h2>
-    <p>The short version: values are the convictions that turn your direction into behaviour, most companies' fail because they cost nothing and live on a wall, and the fix is to thread them through the systems you actually run on. Open any part below — or skip straight to building.</p>
+    <p>The short version: values are the convictions that turn your direction into behaviour, most companies' fail because they cost nothing and live on a wall, and the fix is to weave them through everything that shapes behaviour — what you build, how you run, and how you treat people. Open any part below — or skip straight to building.</p>
     <div class="acc">
 
     <details open>
@@ -696,7 +733,8 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
     <div class="steps" id="steps">
       <div class="step active" data-step="0" onclick="goStep(0)"><span class="sn">01</span>Gather</div>
       <div class="step" data-step="1" onclick="goStep(1)"><span class="sn">02</span>Shape</div>
-      <div class="step" data-step="2" onclick="goStep(2)"><span class="sn">03</span>Weave in</div>
+      <div class="step" data-step="2" onclick="goStep(2)"><span class="sn">03</span>Prioritise</div>
+      <div class="step" data-step="3" onclick="goStep(3)"><span class="sn">04</span>Weave in</div>
     </div>
   </div>
 </section>
@@ -717,39 +755,39 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
       </div>
       <div class="ph-text">
       <h2 class="sec-title">GATHER — START WITH BEHAVIOURS</h2>
-      <p>Don't ask "what do we believe?" Ask "what do people actually do here at our best?" Answer four quick prompts and Weave finds the values underneath. <span class="ai-pill">AI-assisted</span></p>
+      <p>Don't ask "what do we believe?" Ask "what do people actually do here — or what do we want them to?" Works whether you're refreshing values or founding from scratch. Answer what you can. <span class="ai-pill">AI-assisted</span></p>
       <div class="extract-how">
-        <span class="eh-step"><b>Make.</b> What you build &amp; who for</span>
+        <span class="eh-step"><b>Make.</b> What we build &amp; who for</span>
         <span class="eh-arrow">→</span>
-        <span class="eh-step"><b>Want.</b> The behaviour you want more of</span>
+        <span class="eh-step"><b>Want.</b> The behaviour we want to be known for</span>
         <span class="eh-arrow">→</span>
-        <span class="eh-step"><b>Proven.</b> A decision that cost you something</span>
+        <span class="eh-step"><b>Proven.</b> A choice that shows it's real</span>
         <span class="eh-arrow">→</span>
-        <span class="eh-step"><b>Refuse.</b> What you won't tolerate</span>
+        <span class="eh-step"><b>Refuse.</b> What we won't tolerate</span>
       </div>
       </div>
     </div>
 
     <div class="qblock">
-      <label class="fld">1 · What you make &amp; who for</label>
-      <div class="hint">Your product forces values: a premium maker can't value "good enough"; a safety-critical one can't value "move fast." What does yours make you care about?</div>
+      <label class="fld">1 · What we make &amp; who for</label>
+      <div class="hint">What we build forces values: a premium maker can't value "good enough"; a safety-critical one can't value "move fast." New company? Describe what you're setting out to build.</div>
       <textarea id="q_product" placeholder="e.g. We make high-trust payments infrastructure for developers. One outage breaks our customers' businesses — so reliability isn't a nice-to-have, it's the product."></textarea>
     </div>
 
     <div class="qblock">
-      <label class="fld">2 · The behaviour you want more of</label>
-      <div class="hint">At your best, what are people actually <em>doing</em>? Describe the action, not a noun.</div>
+      <label class="fld">2 · The behaviour we want to be known for</label>
+      <div class="hint">At our best, what do people actually <em>do</em>? Describe the action, not a noun. New company? Describe the behaviour you want to be true from day one.</div>
       <textarea id="q_want" placeholder="e.g. People ship a rough version to real customers fast, then improve it in the open instead of polishing in private for weeks."></textarea>
     </div>
 
     <div class="qblock">
-      <label class="fld">3 · A decision that cost you something</label>
-      <div class="hint">One real call from the last 6 months you're proud of. Values you've paid for are real; values you only aspire to are wallpaper.</div>
+      <label class="fld">3 · A choice that shows it's real</label>
+      <div class="hint">A decision that proves the value cost you something. New company? Name a line you've already decided you'll hold, even when it's expensive.</div>
       <textarea id="q_proven" placeholder="e.g. We walked away from our biggest-ever deal because the client wanted us to skip our security review. Lost the quarter, did it anyway."></textarea>
     </div>
 
     <div class="qblock">
-      <label class="fld">4 · What you won't tolerate</label>
+      <label class="fld">4 · What we won't tolerate</label>
       <div class="hint">What gets someone managed out, even if they're brilliant? A value is defined as much by what it rules out.</div>
       <textarea id="q_refuse" placeholder="e.g. People who can't take feedback in the open. We've lost genuine stars over it and never regretted it."></textarea>
     </div>
@@ -757,6 +795,7 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
     <div class="btnrow">
       <button class="btn ember" id="extractBtn" onclick="runExtract()">Find my values →</button>
       <button class="btn ghost" onclick="loadSample()">Try a sample org</button>
+      <button class="btn ghost" onclick="testAI(this)" title="Check the AI connection">Test AI</button>
     </div>
 
     <div class="candidates" id="candidates"></div>
@@ -803,13 +842,52 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
     </div>
     <div id="draftList"></div>
     <div class="btnrow" id="toEmbedRow" style="display:none">
-      <button class="btn ember" onclick="goStep(2);buildEmbed()">Weave these in →</button>
+      <button class="btn ember" onclick="goStep(2);buildPrioritise()">Prioritise these →</button>
     </div>
   </div>
 </section>
 
-<!-- PANEL 2: EMBED -->
+<!-- PANEL 2: PRIORITISE (cut + tension) -->
 <section class="panel" id="panel2">
+  <div class="wrap">
+    <div class="panel-head with-art">
+      <div class="ph-art" aria-hidden="true">
+        <svg viewBox="0 0 90 90" width="78" height="78" xmlns="http://www.w3.org/2000/svg">
+          <!-- scales / choosing -->
+          <path d="M45 16 L45 64" stroke="#1C0F08" stroke-width="2.6" stroke-linecap="round"/>
+          <path d="M20 26 L70 26" stroke="#1C0F08" stroke-width="2.6" stroke-linecap="round"/>
+          <path d="M20 26 L12 44 a10 10 0 0 0 16 0 Z" fill="none" stroke="#E8501A" stroke-width="2.4" stroke-linejoin="round"/>
+          <path d="M70 26 L62 44 a10 10 0 0 0 16 0 Z" fill="none" stroke="#2D4FA8" stroke-width="2.4" stroke-linejoin="round"/>
+          <circle cx="45" cy="16" r="3.4" fill="#C8A830"/>
+          <path d="M30 70 L60 70" stroke="#1C0F08" stroke-width="2.6" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="ph-text">
+      <h2 class="sec-title">PRIORITISE — CUT, THEN RANK THE COLLISIONS</h2>
+      <p>The hardest part of values work, and the part most tools skip. First cut to a real set (4–6 — fewer than you think). Then settle the tensions: when two of your values pull in opposite directions, which one wins?</p>
+      </div>
+    </div>
+
+    <div class="prio-block">
+      <div class="prio-h"><span class="prio-num">1</span> Make the cut <span class="prio-count" id="cutCount"></span></div>
+      <p class="prio-sub">Keep the ones that are genuinely true and load-bearing. A tight set of 4–6 beats a wall of 10 nobody remembers. Untick to drop.</p>
+      <div class="cut-list" id="cutList"></div>
+    </div>
+
+    <div class="prio-block" id="tensionBlock">
+      <div class="prio-h"><span class="prio-num">2</span> Settle the tensions</div>
+      <p class="prio-sub">For each pair that can genuinely conflict, pick which wins when you can't honour both. This is the hierarchy a team can actually use at 5pm on a Friday — the single most useful thing to come out of a values exercise.</p>
+      <div class="tension-list" id="tensionList"></div>
+    </div>
+
+    <div class="btnrow" id="toWeaveRow" style="display:none">
+      <button class="btn ember" onclick="goStep(3);buildEmbed()">Weave the final set in →</button>
+    </div>
+  </div>
+</section>
+
+<!-- PANEL 3: EMBED -->
+<section class="panel" id="panel3">
   <div class="wrap">
     <div class="panel-head with-art">
       <div class="ph-art" aria-hidden="true">
@@ -851,6 +929,9 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
 /* ---------------- state ---------------- */
 let candidates = [];   // {name, behaviour, source, selected}
 let drafts = [];       // {name, behaviour, scores:{cost,spec,opp}, flag, flagType}
+let keep = [];         // booleans parallel to drafts — which made the cut
+let tensions = {};     // {"i-j": winnerIndex} — which value wins a collision
+let edits = {};        // {"valueIndex:surfaceKey": "edited text"} — user overrides of mechanisms
 const AI_ON = true;    // AI runs server-side via /api/generate; heuristics are the offline fallback
 
 /* ---------------- persistence (graceful: no-op if storage blocked) ---------------- */
@@ -860,7 +941,7 @@ function saveState(){
     const ctx={};
     ['ctx_site','ctx_size','ctx_work','ctx_extra','q_product','q_want','q_proven','q_refuse']
       .forEach(id=>{const el=document.getElementById(id); if(el)ctx[id]=el.value;});
-    localStorage.setItem(STORE_KEY,JSON.stringify({candidates,drafts,ctx}));
+    localStorage.setItem(STORE_KEY,JSON.stringify({candidates,drafts,keep,tensions,ctx}));
   }catch(e){/* storage unavailable — session-only, fine */}
 }
 function loadState(){
@@ -868,6 +949,8 @@ function loadState(){
     const raw=localStorage.getItem(STORE_KEY); if(!raw)return false;
     const s=JSON.parse(raw);
     candidates=s.candidates||[]; drafts=s.drafts||[];
+    keep=Array.isArray(s.keep)&&s.keep.length===drafts.length?s.keep:drafts.map(()=>true);
+    tensions=s.tensions||{};
     if(s.ctx)Object.entries(s.ctx).forEach(([id,v])=>{const el=document.getElementById(id); if(el)el.value=v;});
     if(candidates.length)renderCandidates();
     if(drafts.length)renderDrafts();
@@ -876,13 +959,16 @@ function loadState(){
 }
 function clearState(){
   try{localStorage.removeItem(STORE_KEY);}catch(e){}
-  candidates=[];drafts=[];
+  candidates=[];drafts=[];keep=[];tensions={};
   ['ctx_site','ctx_size','ctx_work','ctx_extra','q_product','q_want','q_proven','q_refuse']
     .forEach(id=>{const el=document.getElementById(id); if(el)el.value='';});
   document.getElementById('candidates').innerHTML='';
   document.getElementById('toDraftRow').style.display='none';
   document.getElementById('draftList').innerHTML='';
   document.getElementById('toEmbedRow').style.display='none';
+  const cl=document.getElementById('cutList'); if(cl)cl.innerHTML='';
+  const tl=document.getElementById('tensionList'); if(tl)tl.innerHTML='';
+  const tw=document.getElementById('toWeaveRow'); if(tw)tw.style.display='none';
   document.getElementById('embedList').innerHTML='';
   document.getElementById('exportRow').style.display='none';
   goStep(0);
@@ -916,8 +1002,8 @@ function contextBlock(){
 
 /* ---------------- step nav ---------------- */
 function goStep(n){
-  // guard: can't shape with no candidates, can't weave with no drafts
-  if(n>=1 && candidates.filter(c=>c.selected).length===0 && drafts.length===0){
+  const haveCands=candidates.filter(c=>c.selected).length>0 || drafts.length>0;
+  if(n>=1 && !haveCands && drafts.length===0){
     flash('Gather some values first — answer a prompt or try the sample org.');
     n=0;
   } else if(n>=2 && drafts.length===0){
@@ -928,7 +1014,7 @@ function goStep(n){
   document.querySelectorAll('.step').forEach((s,i)=>{
     s.classList.toggle('active',i===n);
     s.classList.toggle('done',i<n);
-    s.classList.toggle('locked', (i===1 && candidates.filter(c=>c.selected).length===0 && drafts.length===0) || (i===2 && drafts.length===0));
+    s.classList.toggle('locked', (i>=1 && !haveCands && drafts.length===0) || (i>=2 && drafts.length===0));
   });
   window.scrollTo({top:document.querySelector('.pipe').offsetTop-20,behavior:'smooth'});
 }
@@ -948,10 +1034,21 @@ async function askAI(system,user){
     headers:{"Content-Type":"application/json"},
     body:JSON.stringify({system:system,prompt:user})
   });
-  if(!res.ok){throw new Error("API "+res.status);}
-  const data=await res.json();
-  if(data.error){throw new Error(data.error);}
+  let data=null;
+  try{ data=await res.json(); }catch(e){ throw new Error("Bad response ("+res.status+")"); }
+  if(!res.ok || data.error){ throw new Error(data && data.error ? data.error : "API "+res.status); }
   return (data.text||"").replace(/```json|```/g,"").trim();
+}
+// one-click connection test so you can confirm the live deploy instantly
+async function testAI(btn){
+  if(btn){btn.disabled=true;btn.dataset.t=btn.textContent;btn.textContent='Testing…';}
+  try{
+    const out=await askAI('Reply with exactly the word: connected','test');
+    flash(out.toLowerCase().includes('connect') ? '✓ AI connected — live and responding.' : '✓ AI responded: '+out.slice(0,40));
+  }catch(e){
+    flash('✗ AI not connected: '+String(e.message).slice(0,80)+' — check the env var on Vercel.');
+  }
+  if(btn){btn.disabled=false;btn.textContent=btn.dataset.t;}
 }
 
 /* ---------------- EXTRACT ---------------- */
@@ -1111,27 +1208,28 @@ const wirePalette=['var(--ember)','var(--moss)','var(--denim)','var(--lavender)'
 // Three buckets a value must run through to be real — each with its concrete surfaces.
 // Mechanisms blend the basics with what's newly possible (tooling config, AI).
 const BUCKETS=[
-  {key:'build', label:'What you build', sub:'the value in the product itself',
+  {key:'build', label:'What we build', sub:'the value our customers feel',
     surfaces:[
-      {key:'product', label:'Product & service'},
-      {key:'os',      label:'Tooling & systems'}
+      {key:'product', label:'Product'},
+      {key:'service', label:'Service & delivery'}
     ]},
-  {key:'run', label:'How you run', sub:'the value in how the work happens',
+  {key:'run', label:'How we run', sub:'the value in how we operate',
     surfaces:[
+      {key:'os',       label:'Tooling & systems'},
       {key:'decide',   label:'Decisions'},
       {key:'rituals',  label:'Rituals & cadence'},
-      {key:'feedback', label:'Feedback loops'}
+      {key:'feedback', label:'Feedback loops'},
+      {key:'resource', label:'Where resources go'}
     ]},
-  {key:'people', label:'How you treat people', sub:'the value in who gets in & ahead',
+  {key:'people', label:'How we treat people', sub:'the value in who gets in & ahead',
     surfaces:[
       {key:'hiring',   label:'Hiring & onboarding'},
-      {key:'reward',   label:'Rewards & recognition'},
-      {key:'resource', label:'Where resources go'}
+      {key:'reward',   label:'Rewards & recognition'}
     ]}
 ];
 // flat list for export
-const SURFACE_ORDER=['product','os','decide','rituals','feedback','hiring','reward','resource'];
-const SURFACE_LABELS={product:'Product & service',os:'Tooling & systems',decide:'Decisions',rituals:'Rituals & cadence',feedback:'Feedback loops',hiring:'Hiring & onboarding',reward:'Rewards & recognition',resource:'Where resources go'};
+const SURFACE_ORDER=['product','service','os','decide','rituals','feedback','resource','hiring','reward'];
+const SURFACE_LABELS={product:'Product',service:'Service & delivery',os:'Tooling & systems',decide:'Decisions',rituals:'Rituals & cadence',feedback:'Feedback loops',resource:'Where resources go',hiring:'Hiring & onboarding',reward:'Rewards & recognition'};
 
 function embedFor(name,behaviour){
   const b=behaviour.toLowerCase();
@@ -1145,6 +1243,7 @@ function embedFor(name,behaviour){
   const lib={
     speed:{
       product:'Ship behind feature flags so rough versions reach real users fast, then iterate in the open.',
+      service:'Tell customers what is still rough and when the fix lands — speed is honest, not hidden.',
       os:'Reversible changes skip the approval gate and auto-deploy; an AI release-notes bot posts what shipped to #shipped.',
       decide:'If a call is reversible, decide it in the room — no second sign-off. Log the rare irreversible ones.',
       rituals:'Weekly "what did we ship?" demo replaces the written status update.',
@@ -1155,6 +1254,7 @@ function embedFor(name,behaviour){
     },
     customer:{
       product:'A "did we make your day?" prompt after key moments feeds a live delight score on the product dashboard.',
+      service:'Support can resolve, refund or escalate without three approvals — the customer outcome beats the process.',
       os:'AI tags every support ticket and surfaces recurring pain to the whole team automatically — not just the queue owner.',
       decide:'Ties break toward the customer; "what would the user want?" is a required line in any major decision doc.',
       rituals:'Every all-hands opens with one verbatim customer quote — picked by AI from the week, good or brutal.',
@@ -1165,6 +1265,7 @@ function embedFor(name,behaviour){
     },
     transparency:{
       product:'Build the product to show its working — surface the "why" behind outputs, not just the answer.',
+      service:'Tell customers the honest status — including when we got it wrong — rather than managing the message.',
       os:'Docs default to all-company; private needs a stated reason. Post-mortems and an AI digest auto-publish.',
       decide:'Decisions are logged in the open with the reasoning, searchable — not buried in DMs.',
       rituals:'Blameless post-mortems shared company-wide become the stories that get retold.',
@@ -1175,6 +1276,7 @@ function embedFor(name,behaviour){
     },
     conviction:{
       product:'The product refuses the dark pattern even when it would lift the metric — the line is built in, not optional.',
+      service:'We say no to the customer request that compromises a principle, and explain why rather than quietly comply.',
       os:'Decision records require a "what we gave up for this" field; a public, searchable convictions log.',
       decide:'When a call compromises a core principle it escalates by default — no quiet trade-off.',
       rituals:'A visible "deals we walked away from" list; leaders narrate the cost out loud at all-hands.',
@@ -1185,6 +1287,7 @@ function embedFor(name,behaviour){
     },
     quality:{
       product:'A craft bar is built into the release gate — nothing customer-facing ships without a named owner signing it.',
+      service:'We would rather deliver late and right than on-time and shoddy — and we set that expectation up front.',
       os:'Automated checks plus an AI reviewer flag anything below the standard before it reaches a human.',
       decide:'The quality bar beats the deadline on customer-facing work — the rule is explicit, not quiet heroics.',
       rituals:'Celebrate the catch and the fix in a #craft channel, not only the launch.',
@@ -1195,25 +1298,98 @@ function embedFor(name,behaviour){
     },
     general:{
       product:'Find the one place in the product where this value is visible to a customer, and make it deliberate.',
-      os:'Make the value a required field or default in a tool you already run — a template, a checklist, an AI prompt.',
+      service:'Decide how this value should change a customer interaction, and give the front line permission to act on it.',
+      os:'Make the value a required field or default in a tool we already run — a template, a checklist, an AI prompt.',
       decide:'Name it as the tie-breaker when two good options conflict, and write the rule down where calls get made.',
       rituals:'Open one recurring ritual with a real story of this value in action.',
       feedback:'Add it to the review template as a behaviour rated with examples, not a score out of nowhere.',
       hiring:'Turn it into a real interview signal and an onboarding moment, not a poster in the lobby.',
       reward:'Cite it explicitly in a promotion decision and celebrate a live example publicly — show the receipts.',
-      resource:'Put budget or headcount behind it — the truest signal of what you actually value.'
+      resource:'Put budget or headcount behind it — the truest signal of what we actually value.'
     }
   };
   return {theme, map:lib[theme]};
 }
 
+/* ---------------- PRIORITISE (cut + tension) ---------------- */
+function keptIndices(){ return drafts.map((d,i)=>i).filter(i=>keep[i]!==false); }
+
+function buildPrioritise(){
+  if(keep.length!==drafts.length) keep=drafts.map(()=>true);
+  renderCut();
+  renderTensions();
+}
+
+function renderCut(){
+  const el=document.getElementById('cutList');
+  const n=keptIndices().length;
+  const cnt=document.getElementById('cutCount');
+  let tone = n>=4&&n<=6 ? 'good' : (n>6?'over':'under');
+  cnt.className='prio-count '+tone;
+  cnt.textContent = n+' kept' + (n>6?' · aim for 4–6':'') + (n<4&&n>0?' · a few more is fine':'') + (n>=4&&n<=6?' · sharp':'');
+  el.innerHTML=drafts.map((d,i)=>`
+    <label class="cut-item ${keep[i]===false?'dropped':''}">
+      <input type="checkbox" ${keep[i]!==false?'checked':''} onchange="toggleKeep(${i},this.checked)">
+      <span class="cut-name">${d.name}</span>
+      <span class="cut-rule">${d.behaviour}</span>
+    </label>`).join('');
+}
+function toggleKeep(i,v){
+  keep[i]=v;
+  Object.keys(tensions).forEach(k=>{const[a,b]=k.split('-').map(Number); if(keep[a]===false||keep[b]===false)delete tensions[k];});
+  renderCut(); renderTensions(); saveState();
+}
+
+function renderTensions(){
+  const idx=keptIndices();
+  const block=document.getElementById('tensionBlock');
+  const el=document.getElementById('tensionList');
+  const row=document.getElementById('toWeaveRow');
+  if(idx.length<2){ block.style.display='none'; row.style.display=idx.length>=1?'flex':'none'; return; }
+  block.style.display='block'; row.style.display='flex';
+  const pairs=[];
+  for(let a=0;a<idx.length;a++)for(let b=a+1;b<idx.length;b++)pairs.push([idx[a],idx[b]]);
+  el.innerHTML=pairs.map(([a,b])=>{
+    const key=a+'-'+b; const w=tensions[key];
+    return `<div class="tension">
+      <div class="tension-q">When <b>${drafts[a].name}</b> and <b>${drafts[b].name}</b> collide, which wins?</div>
+      <div class="tension-opts">
+        <button class="t-opt ${w===a?'on':''}" onclick="setTension('${key}',${a})">${drafts[a].name}</button>
+        <button class="t-opt ${w===b?'on':''}" onclick="setTension('${key}',${b})">${drafts[b].name}</button>
+        <button class="t-opt subtle ${w==='both'?'on':''}" onclick="setTension('${key}','both')">No real conflict</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function setTension(key,val){ tensions[key]=val; renderTensions(); saveState(); }
+
+function mechText(vi,key,fallback){ const k=vi+':'+key; return (edits[k]!==undefined?edits[k]:fallback); }
+function saveMech(vi,key,el){ edits[vi+':'+key]=el.textContent.trim(); saveState(); }
+function saveField(vi,field,el){ drafts[vi][field]=el.textContent.trim(); saveState(); }
+
+function tensionSummaryFor(vi){
+  // collect collisions where this value is involved, among kept values
+  const lines=[];
+  Object.keys(tensions).forEach(k=>{
+    const [a,b]=k.split('-').map(Number); const w=tensions[k];
+    if(w==='both'||w===undefined)return;
+    if(a===vi||b===vi){
+      const other = a===vi?b:a;
+      if(w===vi) lines.push(`Beats <b>${drafts[other].name}</b> when they collide`);
+      else lines.push(`Yields to <b>${drafts[other].name}</b> when they collide`);
+    }
+  });
+  return lines.length?`<div class="ev-tension">${lines.map(l=>`<span>${l}</span>`).join('')}</div>`:'';
+}
+
 function buildEmbed(){
   const el=document.getElementById('embedList');
-  const finals=drafts;
-  if(finals.length===0){el.innerHTML='<div class="empty"><div class="display">NOTHING TO WEAVE IN YET</div>Shape some values first.</div>';return;}
-  el.innerHTML=finals.map((d,i)=>{
+  const finalIdx=keptIndices();
+  if(finalIdx.length===0){el.innerHTML='<div class="empty"><div class="display">NOTHING TO WEAVE IN YET</div>Shape and prioritise some values first.</div>';return;}
+  el.innerHTML=finalIdx.map((vi,n)=>{
+    const d=drafts[vi];
     const e=embedFor(d.name,d.behaviour);
-    const col=wirePalette[i%wirePalette.length];
+    const col=wirePalette[n%wirePalette.length];
     const buckets=BUCKETS.map(bk=>`
       <div class="bucket">
         <div class="bucket-head"><span class="bucket-label">${bk.label}</span><span class="bucket-sub">${bk.sub}</span></div>
@@ -1221,7 +1397,8 @@ function buildEmbed(){
           ${bk.surfaces.map(s=>`
             <div class="surface">
               <div class="surface-head">${s.label}</div>
-              <div class="surface-mech">${e.map[s.key]}</div>
+              <div class="surface-mech" contenteditable="true" spellcheck="false"
+                   onblur="saveMech(${vi},'${s.key}',this)">${mechText(vi,s.key,e.map[s.key])}</div>
             </div>`).join('')}
         </div>
       </div>`).join('');
@@ -1230,10 +1407,11 @@ function buildEmbed(){
       <div class="ev-head">
         <div class="ev-value">
           <span class="ev-tag">The value</span>
-          <span class="vname">${d.name}</span>
-          <span class="ev-rule">${d.behaviour}</span>
+          <span class="vname" contenteditable="true" spellcheck="false" onblur="saveField(${vi},'name',this)">${d.name}</span>
+          <span class="ev-rule" contenteditable="true" spellcheck="false" onblur="saveField(${vi},'behaviour',this)">${d.behaviour}</span>
+          ${tensionSummaryFor(vi)}
         </div>
-        <div class="ev-how"><span class="ev-tag">How we weave it in</span></div>
+        <div class="ev-how"><span class="ev-tag">How we weave it in</span><span class="ev-edit-hint">tap any line to edit</span></div>
       </div>
       <div class="bucket-grid">${buckets}</div>
     </div>`;
@@ -1246,16 +1424,20 @@ function buildEmbed(){
 function exportPDF(){
   const w=window.open('','_blank');
   if(!w){flash('Allow pop-ups to export the PDF.');return;}
-  const card=drafts.map((d,i)=>{
+  const finalIdx=keptIndices();
+  const card=finalIdx.map((vi,n)=>{
+    const d=drafts[vi];
     const e=embedFor(d.name,d.behaviour);
     const buckets=BUCKETS.map(bk=>`
       <div class="pb">
         <div class="pb-h">${bk.label} <span>· ${bk.sub}</span></div>
-        ${bk.surfaces.map(s=>`<div class="pr"><b>${s.label}</b> — ${e.map[s.key]}</div>`).join('')}
+        ${bk.surfaces.map(s=>`<div class="pr"><b>${s.label}</b> — ${mechText(vi,s.key,e.map[s.key])}</div>`).join('')}
       </div>`).join('');
+    const tsum=tensionSummaryFor(vi).replace(/<[^>]+>/g,m=>m==='</span>'?' · ':'' ).trim();
     return `<div class="pv">
-      <div class="pv-name">${i+1}. ${d.name}</div>
+      <div class="pv-name">${n+1}. ${d.name}</div>
       <div class="pv-rule">${d.behaviour}</div>
+      ${tsum?`<div class="pv-tension">${tsum.replace(/ · $/,'')}</div>`:''}
       <div class="pv-how">How we weave it in</div>
       ${buckets}
     </div>`;
@@ -1270,7 +1452,8 @@ function exportPDF(){
     .tag{font-size:15px;color:#555;margin-bottom:32px}
     .pv{border:1px solid #e5e0d5;border-radius:8px;padding:24px;margin-bottom:20px;page-break-inside:avoid;border-left:3px solid #E8501A}
     .pv-name{font-family:"Bebas Neue";font-size:28px;letter-spacing:0.02em;color:#E8501A}
-    .pv-rule{font-size:15px;margin:4px 0 18px}
+    .pv-rule{font-size:15px;margin:4px 0 8px}
+    .pv-tension{font-size:12px;color:#2D4FA8;margin-bottom:14px}
     .pv-how{font-family:"Space Mono";font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:#8A8178;margin-bottom:12px;border-top:1px solid #eee;padding-top:14px}
     .pb{margin-bottom:14px}
     .pb-h{font-family:"Bebas Neue";font-size:17px;letter-spacing:0.03em}
@@ -1290,10 +1473,21 @@ function exportPDF(){
 
 function shareLink(){
   try{
-    const payload=btoa(encodeURIComponent(JSON.stringify(drafts.map(d=>({n:d.name,b:d.behaviour})))));
+    const finalIdx=keptIndices();
+    // remap tensions to the kept subset using new indices
+    const remap={}; finalIdx.forEach((vi,n)=>remap[vi]=n);
+    const t={};
+    Object.keys(tensions).forEach(k=>{const[a,b]=k.split('-').map(Number);
+      if(remap[a]!==undefined&&remap[b]!==undefined&&tensions[k]!=='both'){
+        t[remap[a]+'-'+remap[b]] = tensions[k]===a?remap[a]:remap[b];
+      }});
+    const ed={};
+    finalIdx.forEach((vi,n)=>{ SURFACE_ORDER.forEach(sk=>{ const k=vi+':'+sk; if(edits[k]!==undefined)ed[n+':'+sk]=edits[k]; }); });
+    const pack={v:finalIdx.map(vi=>({n:drafts[vi].name,b:drafts[vi].behaviour})),t,e:ed};
+    const payload=btoa(encodeURIComponent(JSON.stringify(pack)));
     const url=location.origin+location.pathname+'#pack='+payload;
-    navigator.clipboard?.writeText(url);
-    flash('Shareable link copied — anyone who opens it sees this exact pack.');
+    if(url.length>7500){ flash('Pack is large — link may not work everywhere. Use the PDF for a big set.'); }
+    navigator.clipboard?.writeText(url).then(()=>flash('Link copied — anyone who opens it sees this exact pack.'),()=>flash('Link ready but copy failed — check clipboard permissions.'));
   }catch(e){flash('Could not create link.');}
 }
 
@@ -1302,12 +1496,16 @@ function loadSharedPack(){
   try{
     const m=location.hash.match(/pack=([^&]+)/);
     if(!m)return false;
-    const data=JSON.parse(decodeURIComponent(atob(m[1])));
+    const pack=JSON.parse(decodeURIComponent(atob(m[1])));
+    const data=pack.v||pack; // back-compat with old links (bare array)
     if(!Array.isArray(data)||!data.length)return false;
     drafts=data.map(x=>({name:x.n,behaviour:x.b,scores:scoreValue(x.b,x.n),flag:null,flagType:null}));
+    keep=drafts.map(()=>true);
+    tensions=pack.t||{};
+    edits=pack.e||{};
     showView('build');
     renderDrafts();
-    goStep(2);buildEmbed();
+    goStep(3);buildEmbed();
     flash('Opened a shared values pack.');
     return true;
   }catch(e){return false;}
