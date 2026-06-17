@@ -1,14 +1,13 @@
 {
   "name": "weave",
   "version": "1.0.0",
-  "description": "Weave — values woven through your org. A Yite Labs experiment.",
+  "description": "Weave — values that run your org, not your wall. A Yite Labs experiment.",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vercel dev"
   },
   "dependencies": {
-    "ai": "^3.4.0",
-    "@ai-sdk/anthropic": "^3.0.0"
+    "ai": "^5.0.0"
   }
 }
