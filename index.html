@@ -307,6 +307,11 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--ember)}
 
 /* draft / sharpen */
 .draftcard{border:1px solid var(--line);border-radius:var(--r-card);padding:22px;background:var(--chalk);margin-bottom:18px}
+.dc-name-wrap{margin-bottom:14px;flex:1;width:100%}
+.dc-name{font-family:"Bebas Neue";font-size:28px;letter-spacing:0.02em;color:var(--ink);width:100%;border:none;background:none;padding:2px 6px;margin:-2px -6px;border-radius:4px;border-bottom:1px dashed var(--line-strong);transition:background var(--fast),border-color var(--fast)}
+.dc-name:hover{background:rgba(28,15,8,0.03)}
+.dc-name:focus{outline:none;background:#fff;border-bottom-color:var(--ember);box-shadow:0 1px 0 var(--ember)}
+.edit-hint-inline{font-family:"Space Mono";font-size:11px;color:var(--ash);align-self:center;margin-left:4px}
 .draftcard .dc-top{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
 .draftcard .dc-name{font-family:"Bebas Neue";font-size:28px;letter-spacing:0.02em}
 .scorebar{display:flex;gap:6px;margin-top:14px}
@@ -797,7 +802,6 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
     <div class="btnrow">
       <button class="btn ember" id="extractBtn" onclick="runExtract()">Find my values →</button>
       <button class="btn ghost" onclick="loadSample()">Try a sample org</button>
-      <button class="btn ghost" onclick="testAI(this)" title="Check the AI connection">Test AI</button>
       <button class="btn ghost subtle-btn" onclick="clearGather()" title="Clear all answers">Clear</button>
     </div>
 
@@ -1045,7 +1049,10 @@ async function askAI(system,user){
   });
   let data=null;
   try{ data=await res.json(); }catch(e){ throw new Error("Bad response ("+res.status+")"); }
-  if(!res.ok || data.error){ throw new Error(data && data.error ? data.error : "API "+res.status); }
+  if(!res.ok || data.error){
+    const msg = (data && (data.detail || data.error)) ? (data.detail || data.error) : ("API "+res.status);
+    throw new Error(msg);
+  }
   return (data.text||"").replace(/```json|```/g,"").trim();
 }
 // one-click connection test so you can confirm the live deploy instantly
@@ -1053,9 +1060,9 @@ async function testAI(btn){
   if(btn){btn.disabled=true;btn.dataset.t=btn.textContent;btn.textContent='Testing…';}
   try{
     const out=await askAI('Reply with exactly the word: connected','test');
-    flash(out.toLowerCase().includes('connect') ? '✓ AI connected — live and responding.' : '✓ AI responded: '+out.slice(0,40));
+    flash(out.toLowerCase().includes('connect') ? '✓ AI connected — live and responding.' : '✓ AI responded: '+out.slice(0,60));
   }catch(e){
-    flash('✗ AI not connected: '+String(e.message).slice(0,80)+' — check the env var on Vercel.');
+    flash('✗ AI error: '+String(e.message).slice(0,160));
   }
   if(btn){btn.disabled=false;btn.textContent=btn.dataset.t;}
 }
@@ -1164,11 +1171,13 @@ function renderDrafts(){
     return `
     <div class="draftcard">
       <div class="dc-top">
-        <div>
-          <input type="text" value="${d.name.replace(/"/g,'&quot;')}" onchange="drafts[${i}].name=this.value" style="font-family:'Bebas Neue';font-size:26px;border:none;background:none;padding:0;width:auto;letter-spacing:0.02em">
+        <div class="dc-name-wrap">
+          <input type="text" class="dc-name" value="${d.name.replace(/"/g,'&quot;')}"
+                 onchange="drafts[${i}].name=this.value;drafts[${i}].scores=scoreValue(drafts[${i}].behaviour,this.value);drafts[${i}].flag=null;renderDrafts()"
+                 placeholder="Name this value">
         </div>
       </div>
-      <textarea onchange="drafts[${i}].behaviour=this.value;drafts[${i}].scores=scoreValue(this.value,drafts[${i}].name);drafts[${i}].flag=null;renderDrafts()">${d.behaviour}</textarea>
+      <textarea class="dc-rule" onchange="drafts[${i}].behaviour=this.value;drafts[${i}].scores=scoreValue(this.value,drafts[${i}].name);drafts[${i}].flag=null;renderDrafts()" placeholder="Describe the behaviour — when it kicks in and what you give up">${d.behaviour}</textarea>
       <div class="scorebar">
         <div class="score ${scoreClass(s.cost)}"><div class="lbl">Costly</div><div class="val">${s.cost}<span class="of">/5</span></div></div>
         <div class="score ${scoreClass(s.spec)}"><div class="lbl">Specific</div><div class="val">${s.spec}<span class="of">/5</span></div></div>
@@ -1178,6 +1187,7 @@ function renderDrafts(){
       <div class="flag ${ft}">${flag}</div>
       <div class="btnrow rewrite">
         <button class="btn ghost" onclick="aiRewrite(${i}, this)">Sharpen with AI</button>
+        <span class="edit-hint-inline">…or edit the name and rule yourself</span>
       </div>
     </div>`;
   }).join('');
