@@ -116,19 +116,7 @@ header.top{
 /* ---------- hero cta ---------- */
 .hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
 
-/* ---------- home thesis strip ---------- */
-.home-thesis{padding:48px 0 72px}
-.ht-band{border:1px solid var(--line);border-radius:var(--r-card);background:var(--chalk);padding:22px 26px}
-.ht-band-label{font-family:"Space Mono";font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ash);display:block;margin-bottom:14px}
-.ht-line{font-size:clamp(18px,2.6vw,24px);line-height:1.5;max-width:30ch;color:var(--ink)}
-.ht-line b{font-weight:600}
-.ht-line{max-width:64ch}
-.ht-flow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:0}
-.ht-step{font-family:"Space Mono";font-size:13px;letter-spacing:0.04em;color:rgba(28,15,8,0.8);border:1px solid var(--line-strong);padding:9px 16px;border-radius:var(--r-pill)}
-.ht-step b{color:var(--ember);font-weight:700;margin-right:4px}
-.ht-more{font-family:"Space Mono";font-size:13px;letter-spacing:0.04em;color:var(--denim);cursor:pointer;border-bottom:1px solid var(--denim);padding-bottom:2px;margin-left:8px}
-.ht-more:hover{opacity:0.7}
-.ht-arrow{font-family:"Bebas Neue";font-size:24px;color:var(--line-strong)}
+
 
 /* ---------- how-it-works cta ---------- */
 .how-cta{padding:56px 0;border-top:1px solid var(--line);text-align:center}
@@ -296,7 +284,8 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--ember)}
 .btn.ember{background:var(--ember)}
 .btnrow{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:8px}
 
-.ai-pill{font-family:"Space Mono";font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--lavender);border:1px solid var(--lavender);padding:3px 8px;border-radius:var(--r-pill)}
+.ai-pill{display:inline-block;white-space:nowrap;font-family:"Space Mono";font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--lavender);border:1px solid var(--lavender);padding:3px 8px;border-radius:var(--r-pill);vertical-align:middle}
+.ai-pill-row{margin-top:14px}
 
 /* extract output / value cards */
 .candidates{margin-top:34px;display:grid;gap:14px}
@@ -393,6 +382,14 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--ember)}
 .surface-mech[contenteditable]{border-bottom-color:var(--line)}
 .surface-mech[contenteditable]:hover{background:rgba(28,15,8,0.03);border-bottom-color:var(--line-strong)}
 .surface-mech[contenteditable]:focus{background:#fff;box-shadow:0 0 0 2px var(--vc);border-bottom-color:transparent}
+.surface-mech[data-placeholder]:empty::before{content:attr(data-placeholder);color:var(--ash);font-style:italic}
+.tactic-extra{display:flex;align-items:flex-start;gap:6px;margin-top:6px}
+.tactic-extra .surface-mech{flex:1}
+.tactic-del{flex-shrink:0;background:none;border:none;color:var(--ash);font-size:16px;line-height:1;cursor:pointer;padding:2px 4px;border-radius:3px}
+.tactic-del:hover{color:var(--ember);background:rgba(232,80,26,0.08)}
+.tactic-add{margin-top:8px;background:none;border:1px dashed var(--line-strong);color:var(--ash);font-family:"Space Mono";font-size:10px;letter-spacing:0.04em;padding:4px 10px;border-radius:var(--r-pill);cursor:pointer;transition:all var(--fast)}
+.tactic-add:hover{color:var(--vc);border-color:var(--vc)}
+.pr-extra{margin-left:14px;color:rgba(28,15,8,0.7)}
 .vname[contenteditable]:focus,.ev-rule[contenteditable]:focus{outline:none;background:#fff;box-shadow:0 0 0 2px var(--vc);border-radius:4px}
 .ev-edit-hint{display:block;font-family:"Space Mono";font-size:9px;letter-spacing:0.06em;color:var(--ash);margin-top:4px;text-transform:none}
 .ev-tension{margin-top:10px;display:flex;flex-direction:column;gap:3px}
@@ -511,24 +508,6 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
   </div>
 </section>
 
-<!-- HOME: three-step teaser (no argument — that lives in How it works) -->
-<section class="home-thesis">
-  <div class="wrap">
-    <div class="ht-band">
-      <span class="ht-band-label">Four steps</span>
-      <div class="ht-flow">
-        <span class="ht-step"><b>1.</b> Gather</span>
-        <span class="ht-arrow">→</span>
-        <span class="ht-step"><b>2.</b> Shape</span>
-        <span class="ht-arrow">→</span>
-        <span class="ht-step"><b>3.</b> Prioritise</span>
-        <span class="ht-arrow">→</span>
-        <span class="ht-step"><b>4.</b> Weave in</span>
-        <a class="ht-more" onclick="showView('how')">See how it works →</a>
-      </div>
-    </div>
-  </div>
-</section>
 </div><!-- /view-home -->
 
 <!-- ============================ HOW IT WORKS ============================ -->
@@ -540,7 +519,7 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
   <div class="wrap">
     <div class="sec-label">Why values</div>
     <h2>THE CASE, IN THREE PARTS</h2>
-    <p>The short version: values are the convictions that turn your direction into behaviour, most orgs' fail because they cost nothing and live on a wall, and the fix is to weave them through everything that shapes behaviour — what you build, how you run, and how you treat people. Open any part below — or skip straight to building.</p>
+    <p>Three quick parts: where values sit, why most fail, and what one fully woven looks like. Open any — or skip straight to building.</p>
     <div class="acc">
 
     <details open>
@@ -658,7 +637,7 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
     <details>
       <summary><span class="acc-num">03</span><span class="acc-title">See one fully woven</span><span class="acc-sub">A worked example, end to end</span><span class="acc-chev">+</span></summary>
       <div class="acc-body">
-    <p class="worked-lede">Here's one value moving through all four steps — so you can see what Weave actually hands you. Not a poster: a value wired into how the org runs.</p>
+    <p class="worked-lede">One value through all four steps — what Weave actually hands you. Not a poster: a value wired into how the org runs.</p>
     <div class="worked-card">
       <div class="wc-stage">
         <span class="wc-tag" style="--c:var(--ember)">01 · Gathered</span>
@@ -721,6 +700,11 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
         <div class="hint">Highest-signal input — Weave reads your product, market and tone from it.</div>
         <input type="text" id="ctx_site" placeholder="https://yourcompany.com">
       </div>
+      <div class="ctx-field full">
+        <label class="fld" for="ctx_direction">Strategic direction</label>
+        <div class="hint">Where are you headed, and how do you intend to win? Values should serve the strategy — not float beside it.</div>
+        <input type="text" id="ctx_direction" placeholder="e.g. become the default payments layer for AI agents by being the most reliable, developer-loved option">
+      </div>
       <div class="ctx-field">
         <label class="fld" for="ctx_size">Size / stage</label>
         <select id="ctx_size">
@@ -781,7 +765,8 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
       </div>
       <div class="ph-text">
       <h2 class="sec-title">GATHER — START WITH BEHAVIOURS</h2>
-      <p>Forget "what do we believe?" The real question: what do people actually do here at their best — or what do you want them to? Answer what you can; new or established, it works either way. <span class="ai-pill">AI-assisted</span></p>
+      <p>Forget "what do we believe?" The real question: what do people actually do here at their best — or what do you want them to? Answer what you can; new or established, it works either way.</p>
+      <p class="ai-pill-row"><span class="ai-pill">AI-assisted</span></p>
       <p class="go-wide-note">Go wide here — don't self-edit. You'll surface more than you need on purpose, then cut to a tight 4–6 in the Prioritise step.</p>
       </div>
     </div>
@@ -838,7 +823,8 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
       </div>
       <div class="ph-text">
       <h2 class="sec-title">SHAPE — MAKE THEM SHARP</h2>
-      <p>Each value is scored against three tests. Low scores mean a dead value pretending to be alive — rewrite until it can settle a real argument. <span class="ai-pill">AI-assisted</span></p>
+      <p>Each value is scored against three tests. Low scores mean a dead value pretending to be alive — rewrite until it can settle a real argument.</p>
+      <p class="ai-pill-row"><span class="ai-pill">AI-assisted</span></p>
       </div>
     </div>
     <div class="tests inline-tests">
@@ -949,7 +935,8 @@ let candidates = [];   // {name, behaviour, source, selected}
 let drafts = [];       // {name, behaviour, scores:{cost,spec,opp}, flag, flagType}
 let keep = [];         // booleans parallel to drafts — which made the cut
 let tensions = {};     // {"i-j": winnerIndex} — which value wins a collision
-let edits = {};        // {"valueIndex:surfaceKey": "edited text"} — user overrides of mechanisms
+let edits = {};        // {"valueIndex:surfaceKey": "edited text"} — user overrides of the base mechanism
+let extraTactics = {}; // {"valueIndex:surfaceKey": ["extra tactic", ...]} — user-added tactics
 const AI_ON = true;    // AI runs server-side via /api/generate; heuristics are the offline fallback
 
 /* ---------------- persistence (graceful: no-op if storage blocked) ---------------- */
@@ -957,9 +944,9 @@ const STORE_KEY='weave_state_v1';
 function saveState(){
   try{
     const ctx={};
-    ['ctx_site','ctx_size','ctx_work','ctx_extra','q_product','q_want','q_proven','q_refuse']
+    ['ctx_site','ctx_direction','ctx_size','ctx_work','ctx_extra','q_product','q_want','q_proven','q_refuse']
       .forEach(id=>{const el=document.getElementById(id); if(el)ctx[id]=el.value;});
-    localStorage.setItem(STORE_KEY,JSON.stringify({candidates,drafts,keep,tensions,ctx}));
+    localStorage.setItem(STORE_KEY,JSON.stringify({candidates,drafts,keep,tensions,edits,extraTactics,ctx}));
   }catch(e){/* storage unavailable — session-only, fine */}
 }
 function loadState(){
@@ -969,6 +956,8 @@ function loadState(){
     candidates=s.candidates||[]; drafts=s.drafts||[];
     keep=Array.isArray(s.keep)&&s.keep.length===drafts.length?s.keep:drafts.map(()=>true);
     tensions=s.tensions||{};
+    edits=s.edits||{};
+    extraTactics=s.extraTactics||{};
     if(s.ctx)Object.entries(s.ctx).forEach(([id,v])=>{const el=document.getElementById(id); if(el)el.value=v;});
     if(candidates.length)renderCandidates();
     if(drafts.length)renderDrafts();
@@ -983,8 +972,8 @@ function clearGather(){
 }
 function clearState(){
   try{localStorage.removeItem(STORE_KEY);}catch(e){}
-  candidates=[];drafts=[];keep=[];tensions={};
-  ['ctx_site','ctx_size','ctx_work','ctx_extra','q_product','q_want','q_proven','q_refuse']
+  candidates=[];drafts=[];keep=[];tensions={};edits={};extraTactics={};
+  ['ctx_site','ctx_direction','ctx_size','ctx_work','ctx_extra','q_product','q_want','q_proven','q_refuse']
     .forEach(id=>{const el=document.getElementById(id); if(el)el.value='';});
   document.getElementById('candidates').innerHTML='';
   document.getElementById('toDraftRow').style.display='none';
@@ -1009,6 +998,7 @@ function showView(name){
 function gatherContext(){
   return {
     site:document.getElementById('ctx_site').value.trim(),
+    direction:document.getElementById('ctx_direction').value.trim(),
     size:document.getElementById('ctx_size').value.trim(),
     work:document.getElementById('ctx_work').value.trim(),
     extra:document.getElementById('ctx_extra').value.trim()
@@ -1018,6 +1008,7 @@ function contextBlock(){
   const c=gatherContext();
   const lines=[];
   if(c.site)lines.push(`Website: ${c.site}`);
+  if(c.direction)lines.push(`Strategic direction (values must serve this): ${c.direction}`);
   if(c.size)lines.push(`Size/stage: ${c.size}`);
   if(c.work)lines.push(`Work approach: ${c.work}`);
   if(c.extra)lines.push(`Other context: ${c.extra}`);
@@ -1418,6 +1409,21 @@ function setTension(key,val){ tensions[key]=val; renderTensions(); saveState(); 
 
 function mechText(vi,key,fallback){ const k=vi+':'+key; return (edits[k]!==undefined?edits[k]:fallback); }
 function saveMech(vi,key,el){ edits[vi+':'+key]=el.textContent.trim(); saveState(); }
+function extraFor(vi,key){ return extraTactics[vi+':'+key] || []; }
+function saveExtra(vi,key,idx,el){
+  const k=vi+':'+key; if(!extraTactics[k])extraTactics[k]=[];
+  extraTactics[k][idx]=el.textContent.trim(); saveState();
+}
+function addTactic(vi,key){
+  const k=vi+':'+key; if(!extraTactics[k])extraTactics[k]=[];
+  extraTactics[k].push(''); buildEmbed();
+  // focus the new tactic
+  setTimeout(()=>{const cells=document.querySelectorAll(`[data-mech="${k}"]`); const last=cells[cells.length-1]; if(last)last.focus();},50);
+}
+function deleteTactic(vi,key,idx){
+  const k=vi+':'+key; if(extraTactics[k]){extraTactics[k].splice(idx,1); if(!extraTactics[k].length)delete extraTactics[k];}
+  buildEmbed(); saveState();
+}
 function saveField(vi,field,el){ drafts[vi][field]=el.textContent.trim(); saveState(); }
 
 function tensionSummaryFor(vi){
@@ -1447,12 +1453,22 @@ function buildEmbed(){
       <div class="bucket">
         <div class="bucket-head"><span class="bucket-label">${bk.label}</span><span class="bucket-sub">${bk.sub}</span></div>
         <div class="bucket-rows">
-          ${bk.surfaces.map(s=>`
+          ${bk.surfaces.map(s=>{
+            const extras=extraFor(vi,s.key);
+            return `
             <div class="surface">
               <div class="surface-head">${s.label}</div>
               <div class="surface-mech" contenteditable="true" spellcheck="false"
                    onblur="saveMech(${vi},'${s.key}',this)">${mechText(vi,s.key,e.map[s.key])}</div>
-            </div>`).join('')}
+              ${extras.map((t,ti)=>`
+                <div class="tactic-extra">
+                  <div class="surface-mech" data-mech="${vi}:${s.key}" contenteditable="true" spellcheck="false"
+                       onblur="saveExtra(${vi},'${s.key}',${ti},this)" data-placeholder="Add your own tactic…">${t}</div>
+                  <button class="tactic-del" title="Remove tactic" onclick="deleteTactic(${vi},'${s.key}',${ti})">×</button>
+                </div>`).join('')}
+              <button class="tactic-add" onclick="addTactic(${vi},'${s.key}')">+ tactic</button>
+            </div>`;
+          }).join('')}
         </div>
       </div>`).join('');
     return `
@@ -1483,7 +1499,7 @@ function exportPDF(){
     const buckets=BUCKETS.map(bk=>`
       <div class="pb">
         <div class="pb-h">${bk.label} <span>· ${bk.sub}</span></div>
-        ${bk.surfaces.map(s=>`<div class="pr"><b>${s.label}</b> — ${mechText(vi,s.key,e.map[s.key])}</div>`).join('')}
+        ${bk.surfaces.map(s=>`<div class="pr"><b>${s.label}</b> — ${mechText(vi,s.key,e.map[s.key])}</div>`+extraFor(vi,s.key).filter(t=>t.trim()).map(t=>`<div class="pr pr-extra">— ${t}</div>`).join('')).join('')}
       </div>`).join('');
     const tsum=tensionSummaryFor(vi).replace(/<[^>]+>/g,m=>m==='</span>'?' · ':'' ).trim();
     return `<div class="pv">
@@ -1535,7 +1551,13 @@ function shareLink(){
       }});
     const ed={};
     finalIdx.forEach((vi,n)=>{ SURFACE_ORDER.forEach(sk=>{ const k=vi+':'+sk; if(edits[k]!==undefined)ed[n+':'+sk]=edits[k]; }); });
-    const pack={v:finalIdx.map(vi=>({n:drafts[vi].name,b:drafts[vi].behaviour})),t,e:ed};
+    // carry user-added tactics, remapped to the kept subset's new indices
+    const ex={};
+    finalIdx.forEach((vi,n)=>{ SURFACE_ORDER.forEach(sk=>{ const k=vi+':'+sk;
+      const arr=(extraTactics[k]||[]).filter(t=>t&&t.trim());
+      if(arr.length)ex[n+':'+sk]=arr; }); });
+    const dir=(document.getElementById('ctx_direction')||{}).value||'';
+    const pack={v:finalIdx.map(vi=>({n:drafts[vi].name,b:drafts[vi].behaviour})),t,e:ed,x:ex,d:dir.trim()};
     const payload=btoa(encodeURIComponent(JSON.stringify(pack)));
     const url=location.origin+location.pathname+'#pack='+payload;
     if(url.length>7500){ flash('Pack is large — link may not work everywhere. Use the PDF for a big set.'); }
@@ -1555,6 +1577,8 @@ function loadSharedPack(){
     keep=drafts.map(()=>true);
     tensions=pack.t||{};
     edits=pack.e||{};
+    extraTactics=pack.x||{};
+    if(pack.d){const el=document.getElementById('ctx_direction'); if(el)el.value=pack.d;}
     showView('build');
     renderDrafts();
     goStep(3);buildEmbed();
@@ -1567,7 +1591,7 @@ function loadSharedPack(){
 (function init(){
   if(loadSharedPack())return; // a shared link takes precedence
   const restored=loadState();
-  ['ctx_site','ctx_size','ctx_work','ctx_extra','q_product','q_want','q_proven','q_refuse']
+  ['ctx_site','ctx_direction','ctx_size','ctx_work','ctx_extra','q_product','q_want','q_proven','q_refuse']
     .forEach(id=>{const el=document.getElementById(id); if(el)el.addEventListener('change',saveState);});
   if(restored){flash('Picked up where you left off.');}
 })();
