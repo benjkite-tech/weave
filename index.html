@@ -118,10 +118,12 @@ header.top{
 
 /* ---------- home thesis strip ---------- */
 .home-thesis{padding:48px 0 72px}
+.ht-band{border:1px solid var(--line);border-radius:var(--r-card);background:var(--chalk);padding:22px 26px}
+.ht-band-label{font-family:"Space Mono";font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ash);display:block;margin-bottom:14px}
 .ht-line{font-size:clamp(18px,2.6vw,24px);line-height:1.5;max-width:30ch;color:var(--ink)}
 .ht-line b{font-weight:600}
 .ht-line{max-width:64ch}
-.ht-flow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:28px}
+.ht-flow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:0}
 .ht-step{font-family:"Space Mono";font-size:13px;letter-spacing:0.04em;color:rgba(28,15,8,0.8);border:1px solid var(--line-strong);padding:9px 16px;border-radius:var(--r-pill)}
 .ht-step b{color:var(--ember);font-weight:700;margin-right:4px}
 .ht-more{font-family:"Space Mono";font-size:13px;letter-spacing:0.04em;color:var(--denim);cursor:pointer;border-bottom:1px solid var(--denim);padding-bottom:2px;margin-left:8px}
@@ -285,6 +287,11 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--ember)}
 .btn.ghost{background:none;color:var(--ink);border:1px solid var(--line-strong)}
 .btn.subtle-btn{color:var(--ash);border-color:var(--line);margin-left:auto}
 .btn.subtle-btn:hover{color:var(--ember);border-color:var(--ember)}
+.go-wide-note{font-size:13.5px;line-height:1.5;color:var(--moss);background:rgba(26,122,74,0.07);border-left:2px solid var(--moss);padding:10px 14px;border-radius:4px;margin-top:14px;max-width:60ch}
+.add-card{width:100%;justify-content:center;border-style:dashed;color:var(--ash);margin-top:4px}
+.add-card:hover{color:var(--ember);border-color:var(--ember)}
+.btn.del-btn{margin-left:0;font-size:12px;padding:6px 12px}
+.ev-tension-lbl{font-family:"Space Mono";font-size:9px!important;letter-spacing:0.1em;text-transform:uppercase;color:var(--ash)!important;display:block;margin-bottom:2px}
 .btn.ghost:hover{background:var(--ink);color:var(--ground)}
 .btn.ember{background:var(--ember)}
 .btnrow{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:8px}
@@ -382,9 +389,10 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--ember)}
 .surface{padding:13px 18px;border-bottom:1px dashed var(--line)}
 .surface:last-child{border-bottom:none}
 .surface-head{font-family:"Space Mono";font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--vc);margin-bottom:5px}
-.surface-mech{font-size:13px;line-height:1.5;color:rgba(28,15,8,0.84);border-radius:4px;transition:background var(--fast);outline:none}
-.surface-mech[contenteditable]:hover{background:rgba(28,15,8,0.03)}
-.surface-mech[contenteditable]:focus{background:#fff;box-shadow:0 0 0 2px var(--vc)}
+.surface-mech{font-size:13px;line-height:1.5;color:rgba(28,15,8,0.84);border-radius:4px;transition:background var(--fast);outline:none;cursor:text;border-bottom:1px dashed transparent;padding-bottom:2px}
+.surface-mech[contenteditable]{border-bottom-color:var(--line)}
+.surface-mech[contenteditable]:hover{background:rgba(28,15,8,0.03);border-bottom-color:var(--line-strong)}
+.surface-mech[contenteditable]:focus{background:#fff;box-shadow:0 0 0 2px var(--vc);border-bottom-color:transparent}
 .vname[contenteditable]:focus,.ev-rule[contenteditable]:focus{outline:none;background:#fff;box-shadow:0 0 0 2px var(--vc);border-radius:4px}
 .ev-edit-hint{display:block;font-family:"Space Mono";font-size:9px;letter-spacing:0.06em;color:var(--ash);margin-top:4px;text-transform:none}
 .ev-tension{margin-top:10px;display:flex;flex-direction:column;gap:3px}
@@ -476,7 +484,7 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
     <div class="hero-copy">
       <div class="eyebrow">Values that run your org, not your wall</div>
       <h1 class="display">WEAVE VALUES<br>THROUGHOUT<br>YOUR <span class="carve">ORG.</span></h1>
-      <p class="lede">Most companies' values are wall art. Weave threads yours through everything that shapes behaviour — what you build, how you run, and how you treat people — so they drive the org instead of decorating a careers page.</p>
+      <p class="lede">Most orgs' values are wall art. Weave threads yours through everything that shapes behaviour — what you build, how you run, and how you treat people — so they actually run the org.</p>
       <div class="hero-cta">
         <button class="btn ember" onclick="showView('build')">Weave your values →</button>
       </div>
@@ -506,13 +514,16 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
 <!-- HOME: three-step teaser (no argument — that lives in How it works) -->
 <section class="home-thesis">
   <div class="wrap">
-    <div class="ht-flow">
-      <span class="ht-step"><b>1.</b> Gather</span>
-      <span class="ht-arrow">→</span>
-      <span class="ht-step"><b>2.</b> Shape</span>
-      <span class="ht-arrow">→</span>
-      <span class="ht-step"><b>3.</b> Weave in</span>
-      <a class="ht-more" onclick="showView('how')">See how it works →</a>
+    <div class="ht-band">
+      <span class="ht-band-label">Three steps</span>
+      <div class="ht-flow">
+        <span class="ht-step"><b>1.</b> Gather</span>
+        <span class="ht-arrow">→</span>
+        <span class="ht-step"><b>2.</b> Shape</span>
+        <span class="ht-arrow">→</span>
+        <span class="ht-step"><b>3.</b> Weave in</span>
+        <a class="ht-more" onclick="showView('how')">See how it works →</a>
+      </div>
     </div>
   </div>
 </section>
@@ -527,7 +538,7 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
   <div class="wrap">
     <div class="sec-label">Why values</div>
     <h2>THE CASE, IN THREE PARTS</h2>
-    <p>The short version: values are the convictions that turn your direction into behaviour, most companies' fail because they cost nothing and live on a wall, and the fix is to weave them through everything that shapes behaviour — what you build, how you run, and how you treat people. Open any part below — or skip straight to building.</p>
+    <p>The short version: values are the convictions that turn your direction into behaviour, most orgs' fail because they cost nothing and live on a wall, and the fix is to weave them through everything that shapes behaviour — what you build, how you run, and how you treat people. Open any part below — or skip straight to building.</p>
     <div class="acc">
 
     <details open>
@@ -613,8 +624,8 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
     </div>
 
     <div class="proof">
-      <h3 class="proof-h">VALUES AS LEVERAGE, NOT LAMINATE</h3>
-      <p class="proof-lede">The companies whose values actually work all do the same thing: each one rules something specific <em>out</em>. That's the cost — and the clarity.</p>
+      <h3 class="proof-h">VALUES WITH TEETH</h3>
+      <p class="proof-lede">The orgs whose values actually change decisions all do the same thing: each one rules something specific <em>out</em>. That's the cost — and the clarity.</p>
       <div class="proof-grid">
         <div class="proof-card">
           <div class="pc-co">Netflix</div>
@@ -645,7 +656,7 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
     <details>
       <summary><span class="acc-num">03</span><span class="acc-title">See one fully woven</span><span class="acc-sub">A worked example, end to end</span><span class="acc-chev">+</span></summary>
       <div class="acc-body">
-    <p class="worked-lede">Here's one value moving through all three steps — so you can see what Weave actually hands you. Not a poster: a value wired into how the org runs.</p>
+    <p class="worked-lede">Here's one value moving through all four steps — so you can see what Weave actually hands you. Not a poster: a value wired into how the org runs.</p>
     <div class="worked-card">
       <div class="wc-stage">
         <span class="wc-tag" style="--c:var(--ember)">01 · Gathered</span>
@@ -663,7 +674,13 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
       </div>
       <div class="wc-arrow" aria-hidden="true">→</div>
       <div class="wc-stage">
-        <span class="wc-tag" style="--c:var(--moss)">03 · Woven in</span>
+        <span class="wc-tag" style="--c:var(--denim)">03 · Prioritised</span>
+        <p class="wc-cap">Kept in the final set, with a default for the one moment it clashes:</p>
+        <div class="wc-rule">If <b>Ship &amp; Learn</b> and <b>Craft</b> ever pull apart, we lead with <b>Ship &amp; Learn</b> — rough and real beats perfect and late.</div>
+      </div>
+      <div class="wc-arrow" aria-hidden="true">→</div>
+      <div class="wc-stage">
+        <span class="wc-tag" style="--c:var(--moss)">04 · Woven in</span>
         <p class="wc-cap">Built into the tools you run on so it enforces itself:</p>
         <div class="wc-code"><span class="c">// deploy config</span>
 <span class="k">require_approval</span>: reversible ? <span class="s">false</span> : <span class="s">true</span>
@@ -694,8 +711,8 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
 <section class="context">
   <div class="wrap">
     <div class="sec-label">Optional — sharpens everything below</div>
-    <h2 class="sec-title">TELL WEAVE ABOUT YOUR ORG</h2>
-    <p class="context-lede">Values don't come from nowhere — they come from what you build, how big you are, and how you work. Give Weave this context and every value it surfaces gets more specific to you. All optional, but the more you share, the sharper the output.</p>
+    <h2 class="sec-title">TELL WEAVE ABOUT YOUR COMPANY</h2>
+    <p class="context-lede">Values don't come from nowhere — they come from what you build, how big you are, how you work, where you want to be, and how you behave on your best days. Give Weave this context and every value you shape gets more specific to you. All optional, but the more you share, the sharper the output.</p>
     <div class="context-grid">
       <div class="ctx-field full">
         <label class="fld" for="ctx_site">Company website</label>
@@ -762,7 +779,8 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
       </div>
       <div class="ph-text">
       <h2 class="sec-title">GATHER — START WITH BEHAVIOURS</h2>
-      <p>Don't ask "what do we believe?" Ask "what do people actually do here — or what do we want them to?" Works whether you're refreshing values or founding from scratch. Answer what you can. <span class="ai-pill">AI-assisted</span></p>
+      <p>Forget "what do we believe?" The real question: what do people actually do here at their best — or what do you want them to? Answer what you can; new or established, it works either way. <span class="ai-pill">AI-assisted</span></p>
+      <p class="go-wide-note">Go wide here — don't self-edit. You'll surface more than you need on purpose, then cut to a tight 4–6 in the Prioritise step.</p>
       <div class="extract-how">
         <span class="eh-step"><b>Make.</b> What we build &amp; who for</span>
         <span class="eh-arrow">→</span>
@@ -777,19 +795,19 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
 
     <div class="qblock">
       <label class="fld">1 · What we make &amp; who for</label>
-      <div class="hint">What we build forces values: a premium maker can't value "good enough"; a safety-critical one can't value "move fast." New company? Describe what you're setting out to build.</div>
+      <div class="hint">What we build forces values: a premium maker can't value "good enough"; a safety-critical one can't value "move fast." Just starting out? Describe what you're setting out to build.</div>
       <textarea id="q_product" placeholder="e.g. We make high-trust payments infrastructure for developers. One outage breaks our customers' businesses — so reliability isn't a nice-to-have, it's the product."></textarea>
     </div>
 
     <div class="qblock">
       <label class="fld">2 · The behaviour we want to be known for</label>
-      <div class="hint">At our best, what do people actually <em>do</em>? Describe the action, not a noun. New company? Describe the behaviour you want to be true from day one.</div>
+      <div class="hint">At our best, what do people actually <em>do</em>? Describe the action, not a noun. Just starting out? Describe the behaviour you want to be true from day one.</div>
       <textarea id="q_want" placeholder="e.g. People ship a rough version to real customers fast, then improve it in the open instead of polishing in private for weeks."></textarea>
     </div>
 
     <div class="qblock">
       <label class="fld">3 · A choice that shows it's real</label>
-      <div class="hint">A decision that proves the value cost you something. New company? Name a line you've already decided you'll hold, even when it's expensive.</div>
+      <div class="hint">A decision that proves the value cost you something. Just starting out? Name a line you've already decided you'll hold, even when it's expensive.</div>
       <textarea id="q_proven" placeholder="e.g. We walked away from our biggest-ever deal because the client wanted us to skip our security review. Lost the quarter, did it anyway."></textarea>
     </div>
 
@@ -870,7 +888,7 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
         </svg>
       </div>
       <div class="ph-text">
-      <h2 class="sec-title">PRIORITISE — CUT, THEN RANK THE COLLISIONS</h2>
+      <h2 class="sec-title">PRIORITISE — CUT, THEN SET YOUR DEFAULTS</h2>
       <p>The hardest part of values work, and the part most tools skip. First cut to a real set (4–6 — fewer than you think). Then settle the tensions: when two of your values pull in opposite directions, which one wins?</p>
       </div>
     </div>
@@ -882,8 +900,8 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:var(--chalk)}
     </div>
 
     <div class="prio-block" id="tensionBlock">
-      <div class="prio-h"><span class="prio-num">2</span> Settle the tensions</div>
-      <p class="prio-sub">For each pair that can genuinely conflict, pick which wins when you can't honour both. This is the hierarchy a team can actually use at 5pm on a Friday — the single most useful thing to come out of a values exercise.</p>
+      <div class="prio-h"><span class="prio-num">2</span> Set your defaults</div>
+      <p class="prio-sub">These values complement each other most of the time. But in the rare moment two genuinely pull apart, which do you lead with? Setting that default now is what a team can lean on at 5pm on a Friday — it doesn't rank one value above another, it just settles the hard moment in advance.</p>
       <div class="tension-list" id="tensionList"></div>
     </div>
 
@@ -1157,6 +1175,22 @@ async function buildDraft(){
   renderDrafts();
 }
 
+function addDraft(){
+  drafts.push({name:'New Value', behaviour:'', scores:scoreValue('','New Value'), flag:null, flagType:null});
+  renderDrafts();
+  saveState();
+  // focus the new card's name field
+  setTimeout(()=>{const names=document.querySelectorAll('.dc-name'); const last=names[names.length-1]; if(last){last.focus();last.select();}},50);
+}
+function deleteDraft(i){
+  if(drafts[i] && (drafts[i].behaviour.trim() || drafts[i].name!=='New Value')){
+    if(!confirm('Remove "'+drafts[i].name+'"?'))return;
+  }
+  drafts.splice(i,1);
+  renderDrafts();
+  saveState();
+}
+
 function renderDrafts(){
   const el=document.getElementById('draftList');
   if(drafts.length===0){el.innerHTML='<div class="empty"><div class="display">NOTHING TO SHAPE YET</div>Go back to Gather and pick some candidates.</div>';return;}
@@ -1164,9 +1198,14 @@ function renderDrafts(){
     const s=d.scores;const avg=(s.cost+s.spec+s.opp)/3;
     let flag=d.flag,ft=d.flagType;
     if(!flag){
-      if(avg<2.5){flag="<b>Dead value alert.</b> This reads like a poster word. It costs nothing, settles no argument, and nobody would defend the opposite. Rewrite it as a behaviour with a real tradeoff.";ft='bad';}
-      else if(avg<4){flag="<b>Getting there.</b> Sharpen the weakest test below. The best values name the exact moment they kick in and what you give up.";ft='bad';}
-      else{flag="<b>Sharp.</b> Costly, specific, and has a defensible opposite. This one can settle a real argument.";ft='good';}
+      // name the weakest dimension specifically so the guidance is actionable
+      const dims=[{k:'cost',v:s.cost,label:'costly',fix:'name the real sacrifice it forces — what you say no to'},
+                  {k:'spec',v:s.spec,label:'specific',fix:'name the exact moment it kicks in, not a vague ideal'},
+                  {k:'opp',v:s.opp,label:'opposable',fix:'make sure a reasonable company could choose the opposite'}];
+      const weakest=dims.slice().sort((a,b)=>a.v-b.v)[0];
+      if(avg<2.5){flag="<b>Dead value alert.</b> This reads like a poster word — it costs nothing, settles no argument, and nobody would defend the opposite. Rewrite it as a behaviour with a real tradeoff.";ft='bad';}
+      else if(avg<4){flag=`<b>Weakest test: ${weakest.label} (${weakest.v}/5).</b> To sharpen it, ${weakest.fix}.`;ft='bad';}
+      else{flag="<b>Sharp.</b> Costly, specific, and has a defensible opposite — this one can settle a real argument.";ft='good';}
     }
     return `
     <div class="draftcard">
@@ -1188,9 +1227,11 @@ function renderDrafts(){
       <div class="btnrow rewrite">
         <button class="btn ghost" onclick="aiRewrite(${i}, this)">Sharpen with AI</button>
         <span class="edit-hint-inline">…or edit the name and rule yourself</span>
+        <button class="btn ghost del-btn subtle-btn" onclick="deleteDraft(${i})" title="Remove this value">Delete</button>
       </div>
     </div>`;
-  }).join('');
+  }).join('') + `
+    <button class="btn ghost add-card" onclick="addDraft()">+ Add a value by hand</button>`;
   document.getElementById('toEmbedRow').style.display='flex';
   saveState();
 }
@@ -1227,12 +1268,12 @@ const wirePalette=['var(--ember)','var(--moss)','var(--denim)','var(--lavender)'
 // Three buckets a value must run through to be real — each with its concrete surfaces.
 // Mechanisms blend the basics with what's newly possible (tooling config, AI).
 const BUCKETS=[
-  {key:'build', label:'What we build', sub:'the value our customers feel',
+  {key:'build', label:'What we build', sub:'how customers feel our values in the product',
     surfaces:[
       {key:'product', label:'Product'},
       {key:'service', label:'Service & delivery'}
     ]},
-  {key:'run', label:'How we run', sub:'the value in how we operate',
+  {key:'run', label:'How we run', sub:'how the team operates and lives the values day-to-day',
     surfaces:[
       {key:'os',       label:'Tooling & systems'},
       {key:'decide',   label:'Decisions'},
@@ -1240,7 +1281,7 @@ const BUCKETS=[
       {key:'feedback', label:'Feedback loops'},
       {key:'resource', label:'Where resources go'}
     ]},
-  {key:'people', label:'How we treat people', sub:'the value in who gets in & ahead',
+  {key:'people', label:'How we treat people', sub:'how the values shape who gets in & ahead',
     surfaces:[
       {key:'hiring',   label:'Hiring & onboarding'},
       {key:'reward',   label:'Rewards & recognition'}
@@ -1371,11 +1412,11 @@ function renderTensions(){
   el.innerHTML=pairs.map(([a,b])=>{
     const key=a+'-'+b; const w=tensions[key];
     return `<div class="tension">
-      <div class="tension-q">When <b>${drafts[a].name}</b> and <b>${drafts[b].name}</b> collide, which wins?</div>
+      <div class="tension-q">If <b>${drafts[a].name}</b> and <b>${drafts[b].name}</b> ever pull apart, which do you lead with?</div>
       <div class="tension-opts">
         <button class="t-opt ${w===a?'on':''}" onclick="setTension('${key}',${a})">${drafts[a].name}</button>
         <button class="t-opt ${w===b?'on':''}" onclick="setTension('${key}',${b})">${drafts[b].name}</button>
-        <button class="t-opt subtle ${w==='both'?'on':''}" onclick="setTension('${key}','both')">No real conflict</button>
+        <button class="t-opt subtle ${w==='both'?'on':''}" onclick="setTension('${key}','both')">They don't really conflict</button>
       </div>
     </div>`;
   }).join('');
@@ -1387,18 +1428,18 @@ function saveMech(vi,key,el){ edits[vi+':'+key]=el.textContent.trim(); saveState
 function saveField(vi,field,el){ drafts[vi][field]=el.textContent.trim(); saveState(); }
 
 function tensionSummaryFor(vi){
-  // collect collisions where this value is involved, among kept values
+  // Show the agreed default when this value and another genuinely pull apart.
+  // Framed as situational guidance, NOT a rank stamped on the value.
   const lines=[];
   Object.keys(tensions).forEach(k=>{
     const [a,b]=k.split('-').map(Number); const w=tensions[k];
     if(w==='both'||w===undefined)return;
     if(a===vi||b===vi){
       const other = a===vi?b:a;
-      if(w===vi) lines.push(`Beats <b>${drafts[other].name}</b> when they collide`);
-      else lines.push(`Yields to <b>${drafts[other].name}</b> when they collide`);
+      lines.push(`When this and <b>${drafts[other].name}</b> pull apart, we lead with <b>${drafts[w].name}</b>`);
     }
   });
-  return lines.length?`<div class="ev-tension">${lines.map(l=>`<span>${l}</span>`).join('')}</div>`:'';
+  return lines.length?`<div class="ev-tension"><span class="ev-tension-lbl">Our default in a conflict</span>${lines.map(l=>`<span>${l}</span>`).join('')}</div>`:'';
 }
 
 function buildEmbed(){
