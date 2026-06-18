@@ -5,14 +5,17 @@ import { generateText } from 'ai';
  * Body: { system: string, prompt: string }
  * Returns: { text: string }
  *
- * Uses the Vercel AI Gateway. A plain model string ("anthropic/...") routes
- * through the Gateway automatically. Auth resolves from AI_GATEWAY_API_KEY
- * (set in project env) or, on deployed Vercel functions, the OIDC token.
- * BYOK provider credentials (team level) are used downstream — no code change.
- * The key is NEVER exposed to the browser.
+ * Auth (server-side only; key NEVER reaches the browser):
+ *   - ANTHROPIC_API_KEY  → talks to Anthropic directly, bills your Anthropic
+ *                          account, and bypasses the AI Gateway free-tier model
+ *                          restriction. This is the recommended setup.
+ *   - AI_GATEWAY_API_KEY  → routes a plain model string through the Vercel
+ *                          AI Gateway (needs paid Gateway credits for most models).
  */
 
-const MODEL = process.env.WEAVE_MODEL || 'anthropic/claude-sonnet-4.5';
+// For the direct Anthropic provider use the bare model id; for the Gateway use the prefixed string.
+const ANTHROPIC_MODEL = process.env.WEAVE_MODEL || 'claude-sonnet-4-5';
+const GATEWAY_MODEL = 'anthropic/' + ANTHROPIC_MODEL;
 
 // Best-effort in-memory rate limit (per warm instance).
 const RATE = { windowMs: 60_000, max: 20 };
@@ -44,9 +47,18 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Prompt too long' });
     }
 
-    // Plain string model → routes through the AI Gateway. No provider package needed.
+    let model;
+    if (process.env.ANTHROPIC_API_KEY) {
+      // Direct to Anthropic — bills your Anthropic account, no Gateway tier limits.
+      const { anthropic } = await import('@ai-sdk/anthropic');
+      model = anthropic(ANTHROPIC_MODEL);
+    } else {
+      // Fall back to the Gateway string (needs paid Gateway credits for this model).
+      model = GATEWAY_MODEL;
+    }
+
     const { text } = await generateText({
-      model: MODEL,
+      model,
       system: system || undefined,
       prompt,
       maxOutputTokens: 1500,
