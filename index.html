@@ -32,7 +32,7 @@
   --r-pill:100px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;overflow-x:hidden}
 body{
   background:var(--ground);
   color:var(--ink);
@@ -88,7 +88,7 @@ header.top{
 @keyframes drawThread{to{stroke-dashoffset:0}}
 @keyframes popNode{0%{opacity:0;transform:scale(0.4)}100%{opacity:1;transform:scale(1)}}
 .hero .eyebrow{font-family:"Space Mono";font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:var(--ember);margin-bottom:22px}
-.hero h1{font-family:"Bebas Neue";font-size:clamp(56px,11vw,128px);line-height:0.86;letter-spacing:0.01em;max-width:13ch}
+.hero h1{font-family:"Bebas Neue";font-size:clamp(36px,10.5vw,128px);line-height:0.86;letter-spacing:0.01em;max-width:13ch}
 .hero h1 .carve{position:relative;display:inline-block}
 .hero h1 .carve::after{content:"";position:absolute;left:0;right:0;bottom:0.12em;height:0.09em;background:var(--ember);transform:scaleX(0);transform-origin:left;animation:carve 900ms var(--slow) forwards;}
 @keyframes carve{to{transform:scaleX(1)}}
